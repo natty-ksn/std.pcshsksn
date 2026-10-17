@@ -16,6 +16,7 @@
         <span class="badge badge-danger"><?= count($atRisk) ?> รายการ</span>
     </div>
     <div class="card-body" style="padding: 0;">
+        <div class="table-container" style="margin-bottom: 0;">
         <table class="table">
             <thead>
                 <tr>
@@ -66,6 +67,7 @@
                 <?php endif; ?>
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 

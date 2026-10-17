@@ -45,6 +45,7 @@ $components = $readiness['components'] ?? [];
         <div class="card mb-4">
             <div class="card-header"><strong>📊 คะแนนแต่ละองค์ประกอบ</strong></div>
             <div class="card-body">
+                <div class="table-container" style="margin-bottom: 0;">
                 <table class="table table-hover">
                     <thead>
                         <tr><th>องค์ประกอบ</th><th>คะแนน</th><th>สถานะ</th></tr>
@@ -69,6 +70,7 @@ $components = $readiness['components'] ?? [];
                     <?php endforeach; ?>
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>

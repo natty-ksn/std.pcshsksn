@@ -90,7 +90,7 @@
             <a href="<?= function_exists('url') ? url('/') : '/app/' ?>" class="btn btn-primary">← กลับหน้าหลัก</a>
             <a href="javascript:location.reload()" class="btn btn-secondary">🔄 ลองอีกครั้ง</a>
         </div>
-        <?php if (!empty($exception)): ?>
+        <?php if (!empty($exception) && (class_exists('App') ? App::isDebug() : false)): ?>
         <details style="margin-top: 25px; text-align: left; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; font-size: 0.85em; border: 1px solid rgba(255,255,255,0.2);">
             <summary style="cursor: pointer; color: #fbbf24; font-weight: 600;">🔍 ดูรายละเอียดข้อผิดพลาด (Technical Error Details)</summary>
             <div style="margin-top: 10px; font-family: monospace; word-break: break-all; color: #a5f3fc;">

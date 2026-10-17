@@ -152,6 +152,7 @@
             <h3>👥 จำนวนนักเรียนแยกตามชั้น</h3>
         </div>
         <div class="card-body" style="padding:0;">
+            <div class="table-container" style="margin-bottom:0;">
             <table>
                 <thead>
                     <tr>
@@ -173,6 +174,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
     <div class="card slide-up">
@@ -180,6 +182,7 @@
             <h3>📁 ผลงานแยกตามหมวดหมู่</h3>
         </div>
         <div class="card-body" style="padding:0;">
+            <div class="table-container" style="margin-bottom:0;">
             <table>
                 <thead>
                     <tr>
@@ -200,6 +203,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
+            </div>
         </div>
     </div>
 </div>

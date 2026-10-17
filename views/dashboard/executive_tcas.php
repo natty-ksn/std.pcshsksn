@@ -31,6 +31,7 @@
         <span class="text-muted text-sm">เรียงตามความแข็งแกร่งของข้อมูล</span>
     </div>
     <div class="card-body" style="padding: 0;">
+        <div class="table-container" style="margin-bottom: 0;">
         <table class="table">
             <thead>
                 <tr>
@@ -76,6 +77,7 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+        </div>
     </div>
 </div>
 

@@ -134,7 +134,7 @@
         </div>
     </div>
 
-    <div class="grid mb-4" style="grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); gap: 24px;">
+    <div class="grid mb-4" style="grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px;">
         <div class="card p-4" style="border-radius: 20px;">
             <h4 style="margin-bottom: 20px; font-weight: 800; color: var(--primary-800);">📊 สัดส่วนความสำเร็จแยกตามระดับ</h4>
             <div style="height: 300px;"><canvas id="levelChartEx"></canvas></div>

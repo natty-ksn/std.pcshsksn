@@ -79,102 +79,119 @@ SELECT
     -- Factor 1: GPA Score (25%)
     COALESCE(
         CASE 
-            WHEN AVG(ar.grade) IS NULL THEN 0
-            WHEN AVG(ar.grade) >= 3.5 THEN 25
-            WHEN AVG(ar.grade) >= 3.0 THEN 20
-            WHEN AVG(ar.grade) >= 2.5 THEN 15
-            WHEN AVG(ar.grade) >= 2.0 THEN 8
+            WHEN ar_agg.avg_grade IS NULL THEN 0
+            WHEN ar_agg.avg_grade >= 3.5 THEN 25
+            WHEN ar_agg.avg_grade >= 3.0 THEN 20
+            WHEN ar_agg.avg_grade >= 2.5 THEN 15
+            WHEN ar_agg.avg_grade >= 2.0 THEN 8
             ELSE 3
         END, 0
     ) AS gpa_score,
 
     -- Factor 2: Portfolio Score (20%)
     COALESCE(
-        LEAST(COUNT(DISTINCT pi.id) * 4, 20), 0
+        LEAST(pi_agg.published_count * 4, 20), 0
     ) AS portfolio_score,
 
     -- Factor 3: Activity Score (15%) — อัปเดตภายใน 30 วัน
     COALESCE(
-        CASE WHEN MAX(pi.created_at) > DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 15 ELSE 0 END, 0
+        CASE WHEN pi_agg.last_created_at > DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 15 ELSE 0 END, 0
     ) AS activity_score,
 
     -- Factor 4: Goal Score (15%)
     COALESCE(
-        CASE WHEN COUNT(DISTINCT sg.id) > 0 THEN 15 ELSE 0 END, 0
+        CASE WHEN sg_agg.goal_count > 0 THEN 15 ELSE 0 END, 0
     ) AS goal_score,
 
     -- Factor 5: Project Score (15%)
     COALESCE(
-        LEAST(COUNT(DISTINCT pm.project_id) * 5, 15), 0
+        LEAST(pm_agg.project_count * 5, 15), 0
     ) AS project_score,
 
     -- Factor 6: Logbook Score (10%)
     COALESCE(
-        CASE WHEN COUNT(DISTINCT lb.id) >= 4 THEN 10
-             WHEN COUNT(DISTINCT lb.id) >= 2 THEN 5
+        CASE WHEN lb_agg.logbook_count >= 4 THEN 10
+             WHEN lb_agg.logbook_count >= 2 THEN 5
              ELSE 0 END, 0
     ) AS logbook_score,
 
     -- Total Score (out of 100)
-    -- Risk Level = 100 - total_score (ยิ่ง score น้อย = ยิ่งเสี่ยง)
-    COALESCE(
-        CASE 
-            WHEN AVG(ar.grade) IS NULL THEN 0
-            WHEN AVG(ar.grade) >= 3.5 THEN 25
-            WHEN AVG(ar.grade) >= 3.0 THEN 20
-            WHEN AVG(ar.grade) >= 2.5 THEN 15
-            WHEN AVG(ar.grade) >= 2.0 THEN 8
-            ELSE 3
-        END, 0
-    )
-    + COALESCE(LEAST(COUNT(DISTINCT pi.id) * 4, 20), 0)
-    + COALESCE(CASE WHEN MAX(pi.created_at) > DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 15 ELSE 0 END, 0)
-    + COALESCE(CASE WHEN COUNT(DISTINCT sg.id) > 0 THEN 15 ELSE 0 END, 0)
-    + COALESCE(LEAST(COUNT(DISTINCT pm.project_id) * 5, 15), 0)
-    + COALESCE(
-        CASE WHEN COUNT(DISTINCT lb.id) >= 4 THEN 10
-             WHEN COUNT(DISTINCT lb.id) >= 2 THEN 5
-             ELSE 0 END, 0
+    (
+        COALESCE(
+            CASE 
+                WHEN ar_agg.avg_grade IS NULL THEN 0
+                WHEN ar_agg.avg_grade >= 3.5 THEN 25
+                WHEN ar_agg.avg_grade >= 3.0 THEN 20
+                WHEN ar_agg.avg_grade >= 2.5 THEN 15
+                WHEN ar_agg.avg_grade >= 2.0 THEN 8
+                ELSE 3
+            END, 0
+        )
+        + COALESCE(LEAST(pi_agg.published_count * 4, 20), 0)
+        + COALESCE(CASE WHEN pi_agg.last_created_at > DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 15 ELSE 0 END, 0)
+        + COALESCE(CASE WHEN sg_agg.goal_count > 0 THEN 15 ELSE 0 END, 0)
+        + COALESCE(LEAST(pm_agg.project_count * 5, 15), 0)
+        + COALESCE(CASE WHEN lb_agg.logbook_count >= 4 THEN 10 WHEN lb_agg.logbook_count >= 2 THEN 5 ELSE 0 END, 0)
     ) AS total_score,
 
     -- Risk Level
     CASE
         WHEN (
-            COALESCE(CASE WHEN AVG(ar.grade) >= 3.5 THEN 25 WHEN AVG(ar.grade) >= 3.0 THEN 20 WHEN AVG(ar.grade) >= 2.5 THEN 15 WHEN AVG(ar.grade) >= 2.0 THEN 8 ELSE 3 END, 0)
-            + COALESCE(LEAST(COUNT(DISTINCT pi.id) * 4, 20), 0)
-            + COALESCE(CASE WHEN MAX(pi.created_at) > DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 15 ELSE 0 END, 0)
-            + COALESCE(CASE WHEN COUNT(DISTINCT sg.id) > 0 THEN 15 ELSE 0 END, 0)
-            + COALESCE(LEAST(COUNT(DISTINCT pm.project_id) * 5, 15), 0)
-            + COALESCE(CASE WHEN COUNT(DISTINCT lb.id) >= 4 THEN 10 WHEN COUNT(DISTINCT lb.id) >= 2 THEN 5 ELSE 0 END, 0)
+            COALESCE(CASE WHEN ar_agg.avg_grade >= 3.5 THEN 25 WHEN ar_agg.avg_grade >= 3.0 THEN 20 WHEN ar_agg.avg_grade >= 2.5 THEN 15 WHEN ar_agg.avg_grade >= 2.0 THEN 8 ELSE 3 END, 0)
+            + COALESCE(LEAST(pi_agg.published_count * 4, 20), 0)
+            + COALESCE(CASE WHEN pi_agg.last_created_at > DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 15 ELSE 0 END, 0)
+            + COALESCE(CASE WHEN sg_agg.goal_count > 0 THEN 15 ELSE 0 END, 0)
+            + COALESCE(LEAST(pm_agg.project_count * 5, 15), 0)
+            + COALESCE(CASE WHEN lb_agg.logbook_count >= 4 THEN 10 WHEN lb_agg.logbook_count >= 2 THEN 5 ELSE 0 END, 0)
         ) >= 70 THEN 'low'
         WHEN (
-            COALESCE(CASE WHEN AVG(ar.grade) >= 3.5 THEN 25 WHEN AVG(ar.grade) >= 3.0 THEN 20 WHEN AVG(ar.grade) >= 2.5 THEN 15 WHEN AVG(ar.grade) >= 2.0 THEN 8 ELSE 3 END, 0)
-            + COALESCE(LEAST(COUNT(DISTINCT pi.id) * 4, 20), 0)
-            + COALESCE(CASE WHEN MAX(pi.created_at) > DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 15 ELSE 0 END, 0)
-            + COALESCE(CASE WHEN COUNT(DISTINCT sg.id) > 0 THEN 15 ELSE 0 END, 0)
-            + COALESCE(LEAST(COUNT(DISTINCT pm.project_id) * 5, 15), 0)
-            + COALESCE(CASE WHEN COUNT(DISTINCT lb.id) >= 4 THEN 10 WHEN COUNT(DISTINCT lb.id) >= 2 THEN 5 ELSE 0 END, 0)
+            COALESCE(CASE WHEN ar_agg.avg_grade >= 3.5 THEN 25 WHEN ar_agg.avg_grade >= 3.0 THEN 20 WHEN ar_agg.avg_grade >= 2.5 THEN 15 WHEN ar_agg.avg_grade >= 2.0 THEN 8 ELSE 3 END, 0)
+            + COALESCE(LEAST(pi_agg.published_count * 4, 20), 0)
+            + COALESCE(CASE WHEN pi_agg.last_created_at > DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 15 ELSE 0 END, 0)
+            + COALESCE(CASE WHEN sg_agg.goal_count > 0 THEN 15 ELSE 0 END, 0)
+            + COALESCE(LEAST(pm_agg.project_count * 5, 15), 0)
+            + COALESCE(CASE WHEN lb_agg.logbook_count >= 4 THEN 10 WHEN lb_agg.logbook_count >= 2 THEN 5 ELSE 0 END, 0)
         ) >= 40 THEN 'medium'
         WHEN (
-            COALESCE(CASE WHEN AVG(ar.grade) >= 3.5 THEN 25 WHEN AVG(ar.grade) >= 3.0 THEN 20 WHEN AVG(ar.grade) >= 2.5 THEN 15 WHEN AVG(ar.grade) >= 2.0 THEN 8 ELSE 3 END, 0)
-            + COALESCE(LEAST(COUNT(DISTINCT pi.id) * 4, 20), 0)
-            + COALESCE(CASE WHEN MAX(pi.created_at) > DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 15 ELSE 0 END, 0)
-            + COALESCE(CASE WHEN COUNT(DISTINCT sg.id) > 0 THEN 15 ELSE 0 END, 0)
-            + COALESCE(LEAST(COUNT(DISTINCT pm.project_id) * 5, 15), 0)
-            + COALESCE(CASE WHEN COUNT(DISTINCT lb.id) >= 4 THEN 10 WHEN COUNT(DISTINCT lb.id) >= 2 THEN 5 ELSE 0 END, 0)
+            COALESCE(CASE WHEN ar_agg.avg_grade >= 3.5 THEN 25 WHEN ar_agg.avg_grade >= 3.0 THEN 20 WHEN ar_agg.avg_grade >= 2.5 THEN 15 WHEN ar_agg.avg_grade >= 2.0 THEN 8 ELSE 3 END, 0)
+            + COALESCE(LEAST(pi_agg.published_count * 4, 20), 0)
+            + COALESCE(CASE WHEN pi_agg.last_created_at > DATE_SUB(NOW(), INTERVAL 30 DAY) THEN 15 ELSE 0 END, 0)
+            + COALESCE(CASE WHEN sg_agg.goal_count > 0 THEN 15 ELSE 0 END, 0)
+            + COALESCE(LEAST(pm_agg.project_count * 5, 15), 0)
+            + COALESCE(CASE WHEN lb_agg.logbook_count >= 4 THEN 10 WHEN lb_agg.logbook_count >= 2 THEN 5 ELSE 0 END, 0)
         ) >= 20 THEN 'high'
         ELSE 'critical'
     END AS risk_level
 
 FROM users u
 JOIN student_profiles sp ON u.id = sp.user_id
-LEFT JOIN academic_records ar ON sp.id = ar.student_id
-LEFT JOIN portfolio_items pi ON sp.id = pi.student_id AND pi.status = 'published'
-LEFT JOIN student_goals sg ON sp.id = sg.student_id
-LEFT JOIN project_members pm ON u.id = pm.student_id
-LEFT JOIN logbooks lb ON u.id = lb.student_id
-WHERE u.role = 'student'
-GROUP BY u.id, sp.id;
+LEFT JOIN (
+    SELECT student_id, AVG(grade) AS avg_grade
+    FROM academic_records
+    GROUP BY student_id
+) ar_agg ON sp.id = ar_agg.student_id
+LEFT JOIN (
+    SELECT student_id, COUNT(id) AS published_count, MAX(created_at) AS last_created_at
+    FROM portfolio_items
+    WHERE status = 'published'
+    GROUP BY student_id
+) pi_agg ON sp.id = pi_agg.student_id
+LEFT JOIN (
+    SELECT student_id, COUNT(id) AS goal_count
+    FROM student_goals
+    GROUP BY student_id
+) sg_agg ON sp.id = sg_agg.student_id
+LEFT JOIN (
+    SELECT student_id, COUNT(DISTINCT project_id) AS project_count
+    FROM project_members
+    GROUP BY student_id
+) pm_agg ON u.id = pm_agg.student_id
+LEFT JOIN (
+    SELECT student_id, COUNT(id) AS logbook_count
+    FROM logbooks
+    GROUP BY student_id
+) lb_agg ON u.id = lb_agg.student_id
+WHERE u.role = 'student';
 
 -- =====================================================
 -- VIEW 3: School Analytics Summary — สำหรับผู้บริหาร

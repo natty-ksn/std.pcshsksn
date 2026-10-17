@@ -156,12 +156,15 @@ class RewardsShopController extends Controller
                 [$userId, $rewardId, $cost]
             );
 
-            // Step 3: Decrement stock if not unlimited
+            // Step 3: Decrement stock if not unlimited (prevents overselling)
             if ($stock !== -1) {
-                Database::execute(
+                $stockAffected = Database::execute(
                     "UPDATE rewards_shop SET stock = stock - 1 WHERE id = ? AND stock > 0",
                     [$rewardId]
                 );
+                if ($stockAffected === 0) {
+                    throw new RuntimeException('ของรางวัลนี้หมดแล้ว');
+                }
             }
 
             // Step 4: Grant the reward based on type
@@ -196,7 +199,8 @@ class RewardsShopController extends Controller
         } catch (Exception $e) {
             Database::rollback();
             App::log("RewardsShop redemption error (user #{$userId}): " . $e->getMessage(), 'ERROR');
-            Session::flash('error', '❌ เกิดข้อผิดพลาดในการทำรายการ กรุณาลองใหม่อีกครั้ง');
+            $msg = ($e instanceof RuntimeException) ? $e->getMessage() : 'เกิดข้อผิดพลาดในการทำรายการ กรุณาลองใหม่อีกครั้ง';
+            Session::flash('error', '❌ ' . $msg);
             App::redirect('shop');
         }
     }

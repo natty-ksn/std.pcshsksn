@@ -32,19 +32,13 @@ Env::load(ROOT_PATH . '/.env');
 // ============================================================================
 // 1. ความปลอดภัย (Authentication & Authorization)
 // ============================================================================
-$dbPass = Env::get('DB_PASS', '');
-$doctorKey = Env::get('DB_DOCTOR_KEY', $dbPass);
-$appKey = Env::get('APP_KEY', '');
-
-$isAdminLoggedIn = isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin';
+$doctorKey = Env::get('DB_DOCTOR_KEY', '');
+$isAdminLoggedIn = (class_exists('Auth') && Auth::check() && Auth::hasRole('admin')) 
+    || (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin');
 $inputKey = $_REQUEST['key'] ?? ($_POST['doctor_key'] ?? ($_SESSION['db_doctor_auth'] ?? ''));
 
 $isAuthorized = $isAdminLoggedIn || (
-    !empty($inputKey) && (
-        $inputKey === $dbPass || 
-        (!empty($doctorKey) && $inputKey === $doctorKey) || 
-        (!empty($appKey) && $inputKey === $appKey)
-    )
+    !empty($doctorKey) && !empty($inputKey) && hash_equals($doctorKey, (string)$inputKey)
 );
 
 if ($isAuthorized && !empty($inputKey)) {

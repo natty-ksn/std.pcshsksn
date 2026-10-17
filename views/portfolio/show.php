@@ -246,7 +246,11 @@
             </div>
 
             <!-- External Links (Full Width) -->
-            <?php if (!empty($work['external_link'])): ?>
+            <?php 
+            $extLink = trim($work['external_link'] ?? '');
+            $isSafeLink = preg_match('#^https?://#i', $extLink);
+            ?>
+            <?php if (!empty($extLink) && $isSafeLink): ?>
                 <div
                     style="margin-top: 40px; padding: 30px; background: var(--gray-900); color: white; border-radius: 24px; display: flex; justify-content: space-between; align-items: center;">
                     <div>
@@ -254,7 +258,7 @@
                         <p style="color: var(--gray-400); font-size: 0.9rem; margin-bottom: 0;">Access additional data,
                             high-resolution media, or project source code via the cloud link.</p>
                     </div>
-                    <a href="<?= e($work['external_link']) ?>" target="_blank" rel="noopener noreferrer"
+                    <a href="<?= e($extLink) ?>" target="_blank" rel="noopener noreferrer"
                         class="btn btn-primary btn-lg" style="border-radius: var(--radius-full); padding: 12px 30px;">
                         🔗 Explore External Data
                     </a>

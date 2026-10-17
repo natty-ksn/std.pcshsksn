@@ -39,6 +39,7 @@ $excludeList = @(
 
 # รายการไฟล์ใน public/ ที่เป็นไฟล์ debug/fix (ไม่ต้องอัปโหลด)
 $excludePublicFiles = @(
+    'db_doctor.php',
     'fix_admin.php',
     'fix_passwords.php',
     'fix_settings_encoding.php',

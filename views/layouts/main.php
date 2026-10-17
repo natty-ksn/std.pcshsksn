@@ -1629,6 +1629,26 @@
                         delete link.dataset.exporting;
                     }, 4000);
                 }
+            // Global form double-submission prevention for POST forms
+            document.addEventListener('submit', function (e) {
+                const form = e.target;
+                if (form.method && form.method.toUpperCase() === 'POST') {
+                    if (form.dataset.submitting) {
+                        e.preventDefault();
+                        return;
+                    }
+                    form.dataset.submitting = 'true';
+                    const submitBtn = form.querySelector("button[type='submit'], input[type='submit']");
+                    if (submitBtn && !submitBtn.dataset.noDisable) {
+                        setTimeout(function () {
+                            submitBtn.disabled = true;
+                            if (submitBtn.tagName === 'BUTTON') {
+                                submitBtn.dataset.origText = submitBtn.innerHTML;
+                                submitBtn.innerHTML = '⏳ กำลังประมวลผล...';
+                            }
+                        }, 50);
+                    }
+                }
             });
         })();
     </script>

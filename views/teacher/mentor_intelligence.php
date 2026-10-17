@@ -87,7 +87,7 @@ function sendMentorNudge(studentId, studentName, btn) {
     if (!confirm('ส่งข้อความแจ้งเตือนกระตุ้นการส่งผลงานไปยัง ' + studentName + ' ใช่หรือไม่?')) return;
     btn.disabled = true;
     btn.textContent = '⏳ กำลังส่ง...';
-    fetch('<?= url('analytics/notify-risk') ?>', {
+    fetch('<?= url('analytics/early-warning/notify') ?>', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

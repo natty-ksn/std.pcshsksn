@@ -16,9 +16,9 @@ class Database
         if (self::$connection === null) {
             $host = Env::get('DB_HOST', 'localhost');
             $port = Env::get('DB_PORT', '3306');
-            $name = Env::get('DB_NAME', 'pccks_eportfolio');
-            $user = Env::get('DB_USER', 'root');
-            $pass = Env::get('DB_PASS', '');
+            $name = Env::get('DB_NAME') ?: Env::get('DB_DATABASE', 'pccks_eportfolio');
+            $user = Env::get('DB_USER') ?: Env::get('DB_USERNAME', 'root');
+            $pass = Env::get('DB_PASS') ?? Env::get('DB_PASSWORD', '');
 
             $dsn = "mysql:host={$host};port={$port};dbname={$name};charset=utf8mb4";
             $options = [

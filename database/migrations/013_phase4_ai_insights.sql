@@ -54,14 +54,29 @@ SELECT
     sp.full_name,
     sp.class_year,
     sp.class_room,
-    COALESCE(ROUND(AVG(ar.grade), 2), 0) AS gpa,
-    COUNT(DISTINCT pi.id) AS total_works,
-    COUNT(DISTINCT CASE WHEN pi.achievement_level IS NOT NULL THEN pi.id END) AS works_with_level,
-    COUNT(DISTINCT CASE WHEN pi.award IS NOT NULL AND pi.award != '' THEN pi.id END) AS award_count,
-    COALESCE(SUM(lb.hours_spent), 0) AS total_logbook_hours,
+    COALESCE(ar_agg.gpa, 0) AS gpa,
+    COALESCE(pi_agg.total_works, 0) AS total_works,
+    COALESCE(pi_agg.works_with_level, 0) AS works_with_level,
+    COALESCE(pi_agg.award_count, 0) AS award_count,
+    COALESCE(lb_agg.total_logbook_hours, 0) AS total_logbook_hours,
     (SELECT dominant_trait FROM student_assessments sa WHERE sa.user_id = sp.user_id AND sa.assessment_type = 'riasec' ORDER BY sa.created_at DESC LIMIT 1) AS riasec_dominant
 FROM student_profiles sp
-LEFT JOIN academic_records ar ON sp.id = ar.student_id
-LEFT JOIN portfolio_items pi ON sp.id = pi.student_id AND pi.status = 'published'
-LEFT JOIN logbooks lb ON sp.id = lb.student_id
-GROUP BY sp.id, sp.full_name, sp.class_year, sp.class_room;
+LEFT JOIN (
+    SELECT student_id, ROUND(AVG(grade), 2) AS gpa
+    FROM academic_records
+    GROUP BY student_id
+) ar_agg ON sp.id = ar_agg.student_id
+LEFT JOIN (
+    SELECT student_id,
+           COUNT(id) AS total_works,
+           COUNT(CASE WHEN achievement_level IS NOT NULL THEN 1 END) AS works_with_level,
+           COUNT(CASE WHEN award IS NOT NULL AND award != '' THEN 1 END) AS award_count
+    FROM portfolio_items
+    WHERE status = 'published'
+    GROUP BY student_id
+) pi_agg ON sp.id = pi_agg.student_id
+LEFT JOIN (
+    SELECT student_id, SUM(hours_spent) AS total_logbook_hours
+    FROM logbooks
+    GROUP BY student_id
+) lb_agg ON sp.user_id = lb_agg.student_id;

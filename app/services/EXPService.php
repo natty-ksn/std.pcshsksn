@@ -63,26 +63,29 @@ class EXPService
         }
 
         try {
-            // Get current EXP and Level
-            $user = Database::fetch("SELECT exp, level, points FROM users WHERE id = ?", [$userId]);
-            if (!$user) {
+            // Fetch current level to detect level up
+            $userBefore = Database::fetch("SELECT level FROM users WHERE id = ?", [$userId]);
+            if (!$userBefore) {
                 return ['exp_gained' => 0, 'new_exp' => 0, 'new_level' => 0, 'leveled_up' => false];
             }
+            $oldLevel = (int) ($userBefore['level'] ?? 1);
 
-            $oldExp = (int) ($user['exp'] ?? 0);
-            $oldLevel = (int) ($user['level'] ?? 1);
-            $oldPoints = (int) ($user['points'] ?? 0);
+            // Atomic increment to prevent race conditions
+            Database::execute(
+                "UPDATE users SET exp = exp + ?, points = points + ? WHERE id = ?",
+                [$expGained, $expGained, $userId]
+            );
 
-            $newExp = $oldExp + $expGained;
+            // Read fresh values after atomic increment
+            $userAfter = Database::fetch("SELECT exp, level, points FROM users WHERE id = ?", [$userId]);
+            $newExp = (int) ($userAfter['exp'] ?? 0);
+            $newPoints = (int) ($userAfter['points'] ?? 0);
             $newLevel = self::calculateLevel($newExp);
-            $newPoints = $oldPoints + $expGained; // Points track same as EXP
             $leveledUp = $newLevel > $oldLevel;
 
-            // Update DB
-            Database::execute(
-                "UPDATE users SET exp = ?, level = ?, points = ? WHERE id = ?",
-                [$newExp, $newLevel, $newPoints, $userId]
-            );
+            if ($newLevel !== (int) ($userAfter['level'] ?? 1)) {
+                Database::execute("UPDATE users SET level = ? WHERE id = ?", [$newLevel, $userId]);
+            }
 
             // Sync session if it's the current user
             if (Auth::id() === $userId) {
