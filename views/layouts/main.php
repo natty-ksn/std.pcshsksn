@@ -1397,14 +1397,19 @@
             }
         });
 
-        // Page loader - hide after page loads
-        window.addEventListener('load', function () {
-            const loader = document.getElementById('pageLoader');
-            if (loader) {
+        // Page loader - fail-safe dismiss
+        function hidePageLoader() {
+            var loader = document.getElementById('pageLoader');
+            if (loader && !loader.classList.contains('hidden')) {
                 loader.classList.add('hidden');
-                setTimeout(() => loader.remove(), 300);
+                setTimeout(function () {
+                    if (loader.parentNode) loader.remove();
+                }, 300);
             }
-        });
+        }
+        window.addEventListener('load', hidePageLoader);
+        document.addEventListener('DOMContentLoaded', hidePageLoader);
+        setTimeout(hidePageLoader, 1500);
 
         // Auto-expand nav section if active sub-item
         document.addEventListener('DOMContentLoaded', function () {
@@ -1629,6 +1634,8 @@
                         delete link.dataset.exporting;
                     }, 4000);
                 }
+            });
+
             // Global form double-submission prevention for POST forms
             document.addEventListener('submit', function (e) {
                 const form = e.target;
