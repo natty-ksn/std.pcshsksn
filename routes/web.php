@@ -168,6 +168,7 @@ Router::get('admin/logs', 'AdminController@logs', ['auth', 'admin']);
 Router::get('admin/reports', 'AdminController@reports', ['auth', 'executive']);
 Router::get('admin/settings', 'AdminController@settings', ['auth', 'admin']);
 Router::post('admin/settings/update', 'AdminController@updateSettings', ['auth', 'admin']);
+Router::get('admin/db-doctor', 'AdminController@dbDoctor', ['auth', 'admin']);
 
 // Executive Roadmap Routes
 Router::get('executive/summary', 'DashboardController@executiveSummary', ['auth', 'executive']);

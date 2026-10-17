@@ -689,4 +689,13 @@ class AdminController extends Controller
     {
         ErrorHandler::notFound();
     }
+
+    /**
+     * Database Doctor — เครื่องมือตรวจสอบและปรับปรุงฐานข้อมูลอัตโนมัติ
+     */
+    public function dbDoctor(): void
+    {
+        App::redirect('db_doctor.php');
+    }
 }
+

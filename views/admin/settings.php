@@ -84,6 +84,18 @@
                         <li><strong>Google AI Studio:</strong> คีย์ขึ้นต้น <code>AIza...</code> (ต้องใช้บัญชี <code>@gmail.com</code> ส่วนตัว)</li>
                     </ul>
                 </div>
+                <hr style="margin: 16px 0; border: none; border-top: 1px solid var(--gray-100);">
+                <div style="background: #ecfdf5; border: 1px solid #a7f3d0; padding: 14px; border-radius: 8px;">
+                    <strong style="color: #065f46; display: flex; align-items: center; gap: 6px;">
+                        🩺 ตรวจสอบ & ซ่อมแซมฐานข้อมูล
+                    </strong>
+                    <p style="color: #047857; font-size: 0.8rem; margin: 6px 0 12px;">
+                        เครื่องมือวิเคราะห์โครงสร้างฐานข้อมูล เพิ่มคอลัมน์ที่ขาดหาย และซ่อมแซมเข็มตราอัตโนมัติ
+                    </p>
+                    <a href="<?= url('db_doctor.php') ?>" target="_blank" class="btn btn-primary btn-sm" style="background: #059669; border-color: #059669; width: 100%; text-align: center; justify-content: center; display: inline-flex;">
+                        ⚡ เปิด Database Doctor
+                    </a>
+                </div>
             </div>
         </div>
     </div>

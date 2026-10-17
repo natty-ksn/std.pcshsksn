@@ -1049,6 +1049,10 @@
                                 class="nav-item nav-sub-item <?= isActivePage('admin/settings') ?>">
                                 ⚙️ ตั้งค่าระบบ
                             </a>
+                            <a href="<?= url('db_doctor.php') ?>" target="_blank"
+                                class="nav-item nav-sub-item" style="color: #6ee7b7;">
+                                🩺 ตรวจสอบฐานข้อมูล
+                            </a>
                         </div>
                     </div>
                 <?php endif; ?>
