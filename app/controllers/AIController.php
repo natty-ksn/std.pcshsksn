@@ -147,7 +147,7 @@ class AIController extends Controller
             ['title' => 'ค่ายอัจฉริยภาพวิศวกร รุ่นที่ 15', 'type' => 'camp', 'track' => 'eng', 'provider' => 'คณะวิศวกรรมศาสตร์ มข.', 'tag' => 'Engineering'],
             ['title' => 'โครงการเส้นทางสู่ฝันการเป็นหมอ', 'type' => 'camp', 'track' => 'med', 'provider' => 'คณะแพทยศาสตร์ มหิดล', 'tag' => 'Medical'],
             ['title' => 'แข่งขันโครงงานวิทยาศาสตร์ระดับชาติ', 'type' => 'contest', 'track' => 'science', 'provider' => 'กระทรวงการอุดมศึกษาฯ', 'tag' => 'Research'],
-            ['title' => 'ฝึกงานอาสาสมัครโรงพยาบาลภูมิภาค', 'type' => 'volunteer', 'track' => 'med', 'provider' => 'รพ.กาฬสินธุ์', 'tag' => 'Service'],
+            ['title' => 'ฝึกงานอาสาสมัครโรงพยาบาลภูมิภาค', 'type' => 'volunteer', 'track' => 'med', 'provider' => 'รพ.มุกดาหาร', 'tag' => 'Service'],
             ['title' => 'กิจกรรม Young Innovators 2026', 'type' => 'contest', 'track' => 'tech', 'provider' => 'สวทช.', 'tag' => 'Technology'],
             ['title' => 'เวิร์กช็อปวาดภาพเชิงสร้างสรรค์', 'type' => 'contest', 'track' => 'art', 'provider' => 'หอศิลป์กรงเทพฯ', 'tag' => 'Art'],
         ];
@@ -364,7 +364,7 @@ class AIController extends Controller
             'interests' => $interests,
             'goals' => $goals,
             'top_subjects' => $topSubjects,
-            'school' => 'โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์',
+            'school' => 'โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร',
             'readiness' => !empty($rMap) ? "Overall: " . ($rMap['overall'] ?? 0) . "%, Academic: " . ($rMap['academic'] ?? 0) . "%, Portfolio: " . ($rMap['portfolio'] ?? 0) . "%, Skills: " . ($rMap['skill'] ?? 0) . "%" : 'N/A',
             'riasec_current' => $riasecRecord ? $riasecRecord['result_data'] : 'N/A',
             'riasec_target' => ($primaryGoalFull && $primaryGoalFull['radar_target']) ? $primaryGoalFull['radar_target'] : 'N/A',
@@ -377,7 +377,7 @@ class AIController extends Controller
      */
     private function buildPrompt(string $type, array $ctx): array
     {
-        $system = "คุณเป็นที่ปรึกษาด้านการศึกษาผู้เชี่ยวชาญ สำหรับนักเรียนโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์
+        $system = "คุณเป็นที่ปรึกษาด้านการศึกษาผู้เชี่ยวชาญ สำหรับนักเรียนโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร
                   คุณเข้าใจหลักสูตรวิทยาศาสตร์เข้มข้น และเกณฑ์การรับเข้ามหาวิทยาลัยชั้นนำ (TCAS) ทั้งในและต่างประเทศ
                   ให้คำแนะนำแบบเจาะจง เฉียบคม และเป็นแผนปฏิบัติงาน (Action Plan) ที่นักเรียนทำได้จริง";
 

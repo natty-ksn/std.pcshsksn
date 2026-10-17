@@ -16,7 +16,7 @@
     <img src="<?= asset('images/logo.png') ?>"
         alt="PCSHS Kalasin Logo" style="width: 65px; height: auto; margin-bottom: 16px;">
     <h1 style="font-size: 24pt; margin: 0; font-weight: 700;">รายงานผลสัมฤทธิ์ทางการศึกษาและการดำเนินงาน</h1>
-    <h2 style="font-size: 18pt; margin: 10px 0;">ศูนย์ข้อมูลสารสนเทศ โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์
+    <h2 style="font-size: 18pt; margin: 10px 0;">ศูนย์ข้อมูลสารสนเทศ โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร
     </h2>
     <p style="font-size: 16pt;">ข้อมูล ณ วันที่: <?= date('d/m/Y') ?></p>
 </div>

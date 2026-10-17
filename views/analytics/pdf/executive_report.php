@@ -45,10 +45,10 @@ $levelMap = [
     <div style="width: 70pt; border-top: 2pt solid #1e3a8a; margin: 12pt auto;"></div>
 
     <div style="font-size: 14pt; color: #1e293b; font-weight: bold; margin-top: 50pt;">
-        โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์
+        โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร
     </div>
     <div style="font-size: 11pt; color: #64748b;">
-        Princess Chulabhorn Science High School Kalasin
+        Princess Chulabhorn Science High School Mukdahan
     </div>
 
     <div style="margin-top: 35pt; font-size: 11pt; color: #64748b;">
@@ -447,5 +447,5 @@ $levelMap = [
 
         <p class="text-center text-muted small mt-4">
             เอกสารฉบับนี้ออกโดยระบบ PCSHS KSN e-Portfolio &middot; จัดทำโดย งานศูนย์ข้อมูลสารสนเทศ<br>
-            กลุ่มบริหารงานวิชาการ โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์
+            กลุ่มบริหารงานวิชาการ โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร
         </p>

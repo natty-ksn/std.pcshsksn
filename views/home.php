@@ -9,7 +9,7 @@
             PCSHSKSN e-Portfolio</h1>
         <p style="color: #cbd5e1; font-size: 1.25rem; max-width: 700px; line-height: 1.6; margin: 0 auto;">
             ระบบแฟ้มสะสมผลงานอัจฉริยะ สำหรับนักเรียนผู้มีความสามารถพิเศษ<br>
-            <span style="color: #fbbf24; font-weight: 600;">โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์</span>
+            <span style="color: #fbbf24; font-weight: 600;">โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร</span>
         </p>
         <p style="color: #94a3b8; font-size: 1rem; max-width: 620px; margin: 12px auto 0; line-height: 1.5;">
             แพลตฟอร์มบูรณาการ เชื่อมโยงนักเรียน ครูที่ปรึกษา และฝ่ายบริหาร เข้ากับระบบประเมิน AI และการเตรียมความพร้อมสู่ TCAS

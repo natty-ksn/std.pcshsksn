@@ -17,7 +17,7 @@
             style="background: var(--gray-50); border-radius: var(--radius-md); padding: 20px; margin-bottom: 24px; max-height: 300px; overflow-y: auto; font-size: 0.85rem; line-height: 1.8; color: var(--gray-600);">
             <h3 style="margin-bottom: 12px; color: var(--gray-800);">📋 นโยบายความเป็นส่วนตัว</h3>
 
-            <p><strong>โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์</strong> ขอแจ้งให้ทราบว่าระบบ e-Portfolio
+            <p><strong>โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร</strong> ขอแจ้งให้ทราบว่าระบบ e-Portfolio
                 จะมีการเก็บรวบรวม ใช้ และเปิดเผยข้อมูลส่วนบุคคลของท่าน ดังนี้:</p>
 
             <p><strong>1. ข้อมูลที่เก็บรวบรวม:</strong></p>

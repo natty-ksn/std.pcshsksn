@@ -8,7 +8,7 @@
             <h1 style="font-size: 1.75rem; color: var(--primary-800); margin-bottom: 6px;">PCSHSKSN e-Portfolio</h1>
             <p style="color: var(--gray-600); font-size: 0.95rem; line-height: 1.5; margin: 0;">
                 ระบบแฟ้มสะสมผลงานอัจฉริยะ<br>
-                <strong>โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์</strong>
+                <strong>โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร</strong>
             </p>
             <span style="display: inline-block; margin-top: 8px; font-size: 0.8rem; background: #e0e7ff; color: #3730a3; padding: 3px 12px; border-radius: 9999px; font-weight: 600;">
                 สำหรับนักเรียน • ครู • ฝ่ายบริหาร

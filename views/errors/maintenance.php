@@ -122,7 +122,7 @@ $maintenanceMessage = $message ?? 'ระบบอยู่ระหว่าง
         </div>
         <a href="javascript:location.reload()" class="refresh-btn">🔄 ลองอีกครั้ง</a>
         <div class="footer">
-            PCSHSKSN e-Portfolio — โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์<br>
+            PCSHSKSN e-Portfolio — โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร<br>
             © 2026 PCSHSKSN
         </div>
     </div>

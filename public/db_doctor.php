@@ -81,11 +81,11 @@ $requiredTables = [
     'projects' => 'โครงงานวิทยาศาสตร์และนวัตกรรม',
     'project_members' => 'สมาชิกผู้ร่วมทำโครงงาน',
     'project_documents' => 'เอกสารและแบบฟอร์มโครงงาน',
-    'project_logbooks' => 'บันทึกความก้าวหน้าโครงงาน',
+    'logbooks' => 'บันทึกความก้าวหน้าโครงงาน (Logbooks)',
     'badges_master' => 'ฐานข้อมูลเข็มตราความสำเร็จ (Gamification)',
     'user_badges' => 'เข็มตราที่ผู้ใช้ได้รับ',
     'rewards' => 'ของรางวัลในระบบ Rewards Shop',
-    'reward_redemptions' => 'ประวัติการแลกของรางวัล',
+    'user_reward_redemptions' => 'ประวัติการแลกของรางวัล (Reward Redemptions)',
     'student_goals' => 'เป้าหมายการศึกษาและมหาวิทยาลัย',
     'student_assessments' => 'แบบประเมินตนเอง RIASEC / ความถนัด',
     'student_interests' => 'ความสนใจในอาชีพและสาขาวิชา',
@@ -199,17 +199,70 @@ try {
             ];
         } else {
             if ($action === 'repair') {
-                // พยายามสร้างตารางจาก migration ที่เกี่ยวข้อง
-                $fixed = false;
-                $results['summary']['fixed']++;
-                $results['checks'][] = [
-                    'type' => 'table',
-                    'name' => "ตาราง {$tbl}",
-                    'desc' => $desc,
-                    'status' => 'fixed',
-                    'msg' => 'ซ่อมแซม: ตรวจพบและเตรียมโครงสร้างตาราง'
+                $tableDefinitions = [
+                    'logbooks' => "CREATE TABLE IF NOT EXISTS `logbooks` (
+                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `project_id` int(11) NOT NULL,
+                        `student_id` int(11) NOT NULL,
+                        `activity_detail` text NOT NULL,
+                        `hours_spent` decimal(4,2) DEFAULT NULL,
+                        `teacher_comment` text DEFAULT NULL,
+                        `is_verified` tinyint(1) DEFAULT 0,
+                        `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+                        PRIMARY KEY (`id`),
+                        KEY `idx_project` (`project_id`),
+                        KEY `idx_student_project` (`student_id`,`project_id`),
+                        KEY `idx_verified` (`is_verified`),
+                        KEY `idx_timeline` (`student_id`,`created_at`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci",
+                    'user_reward_redemptions' => "CREATE TABLE IF NOT EXISTS `user_reward_redemptions` (
+                        `id` int(11) NOT NULL AUTO_INCREMENT,
+                        `user_id` int(11) NOT NULL,
+                        `reward_id` int(11) NOT NULL,
+                        `points_spent` int(11) NOT NULL,
+                        `status` enum('pending','granted','revoked','expired') NOT NULL DEFAULT 'pending',
+                        `redeemed_at` timestamp NOT NULL DEFAULT current_timestamp(),
+                        `notes` text DEFAULT NULL,
+                        PRIMARY KEY (`id`),
+                        KEY `reward_id` (`reward_id`),
+                        KEY `idx_user` (`user_id`),
+                        KEY `idx_status` (`status`),
+                        KEY `idx_redeemed_at` (`redeemed_at`)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
                 ];
-                $results['logs'][] = "🛠️ ซ่อมแซมโครงสร้างตาราง {$tbl}";
+
+                if (isset($tableDefinitions[$tbl])) {
+                    try {
+                        $pdo->exec($tableDefinitions[$tbl]);
+                        $results['summary']['fixed']++;
+                        $results['checks'][] = [
+                            'type' => 'table',
+                            'name' => "ตาราง {$tbl}",
+                            'desc' => $desc,
+                            'status' => 'fixed',
+                            'msg' => 'ซ่อมแซมสำเร็จ: สร้างตารางเรียบร้อยแล้ว'
+                        ];
+                        $results['logs'][] = "✅ สร้างตาราง `{$tbl}` สำเร็จ";
+                    } catch (PDOException $e) {
+                        $results['summary']['errors']++;
+                        $results['checks'][] = [
+                            'type' => 'table',
+                            'name' => "ตาราง {$tbl}",
+                            'desc' => $desc,
+                            'status' => 'error',
+                            'msg' => 'สร้างตารางล้มเหลว: ' . $e->getMessage()
+                        ];
+                    }
+                } else {
+                    $results['summary']['warnings']++;
+                    $results['checks'][] = [
+                        'type' => 'table',
+                        'name' => "ตาราง {$tbl}",
+                        'desc' => $desc,
+                        'status' => 'warning',
+                        'msg' => 'ยังไม่พบตารางนี้ในฐานข้อมูล'
+                    ];
+                }
             } else {
                 $results['summary']['warnings']++;
                 $results['checks'][] = [
@@ -455,6 +508,14 @@ try {
     }
 
     if ($action === 'repair') {
+        // อัปเดตชื่อโรงเรียนในตาราง settings ให้ถูกต้องเป็น มุกดาหาร
+        try {
+            $pdo->exec("UPDATE settings SET setting_value = 'โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร' WHERE setting_key = 'school_name' OR setting_value LIKE '%กาฬสินธุ์%'");
+            $results['logs'][] = "🏫 ปรับปรุงชื่อโรงเรียนในตาราง settings เป็น 'โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร' เรียบร้อย";
+        } catch (\Throwable $e) {
+            // ignore if settings table not ready
+        }
+
         $results['logs'][] = "🎉 การซ่อมแซมและปรับปรุงฐานข้อมูลเสร็จสมบูรณ์เรียบร้อย";
     }
 
