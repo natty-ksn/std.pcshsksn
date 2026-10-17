@@ -1,4 +1,4 @@
-﻿-- ============================================================
+-- ============================================================
 -- PCSHSKSN e-Portfolio — Production Ready Database Dump
 -- Generated at: 2026-10-17 09:40:49
 -- Compatible with Shared Hosting (cPanel / DirectAdmin / phpMyAdmin)
@@ -402,6 +402,7 @@ CREATE TABLE IF NOT EXISTS `portfolio_items` (
   `event_date` date DEFAULT NULL,
   `file_path` varchar(500) DEFAULT NULL,
   `thumbnail` varchar(500) DEFAULT NULL,
+  `external_link` varchar(500) DEFAULT NULL,
   `file_size` int(11) DEFAULT 0,
   `is_featured` tinyint(1) DEFAULT 0,
   `tags` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`tags`)),

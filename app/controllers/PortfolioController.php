@@ -141,24 +141,42 @@ class PortfolioController extends Controller
         $tags = $this->input('tags');
         $tagsArray = $tags ? array_map('trim', explode(',', $tags)) : [];
 
-        // Insert
+        // Check if external_link column exists in database schema
+        static $hasExtLink = null;
+        if ($hasExtLink === null) {
+            try {
+                $chk = Database::fetch("SHOW COLUMNS FROM portfolio_items LIKE 'external_link'");
+                $hasExtLink = !empty($chk);
+            } catch (\Throwable $e) {
+                $hasExtLink = false;
+            }
+        }
+
+        $cols = ['student_id', 'category_id', 'title', 'description', 'achievement_level', 'award', 'event_date', 'file_path', 'thumbnail', 'file_size', 'tags', 'status'];
+        $vals = [
+            $profile['id'],
+            (int) $this->input('category_id'),
+            $this->input('title'),
+            $this->rawInput('description'),
+            $this->input('achievement_level') ?: null,
+            $this->input('award') ?: null,
+            $this->input('event_date') ?: null,
+            $fileData['file_path'] ?? null,
+            $fileData['thumbnail'] ?? null,
+            $fileData['file_size'] ?? 0,
+            json_encode($tagsArray, JSON_UNESCAPED_UNICODE),
+            'published'
+        ];
+
+        if ($hasExtLink) {
+            $cols[] = 'external_link';
+            $vals[] = $this->input('external_link') ?: null;
+        }
+
+        $placeholders = implode(', ', array_fill(0, count($cols), '?'));
         $portfolioId = Database::insert(
-            "INSERT INTO portfolio_items (student_id, category_id, title, description, achievement_level, award, event_date, file_path, thumbnail, file_size, tags, status, external_link)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'published', ?)",
-            [
-                $profile['id'],
-                (int) $this->input('category_id'),
-                $this->input('title'),
-                $this->rawInput('description'),
-                $this->input('achievement_level') ?: null,
-                $this->input('award') ?: null,
-                $this->input('event_date') ?: null,
-                $fileData['file_path'] ?? null,
-                $fileData['thumbnail'] ?? null,
-                $fileData['file_size'] ?? 0,
-                json_encode($tagsArray, JSON_UNESCAPED_UNICODE),
-                $this->input('external_link') ?: null
-            ]
+            "INSERT INTO portfolio_items (" . implode(', ', $cols) . ") VALUES ({$placeholders})",
+            $vals
         );
 
         // Save skills
@@ -385,6 +403,17 @@ class PortfolioController extends Controller
             return;
         }
 
+        // Check if external_link column exists
+        static $hasExtLinkUpdate = null;
+        if ($hasExtLinkUpdate === null) {
+            try {
+                $chk = Database::fetch("SHOW COLUMNS FROM portfolio_items LIKE 'external_link'");
+                $hasExtLinkUpdate = !empty($chk);
+            } catch (\Throwable $e) {
+                $hasExtLinkUpdate = false;
+            }
+        }
+
         $updateData = [
             'title' => $this->input('title'),
             'category_id' => (int) $this->input('category_id'),
@@ -392,8 +421,11 @@ class PortfolioController extends Controller
             'achievement_level' => $this->input('achievement_level') ?: null,
             'award' => $this->input('award') ?: null,
             'event_date' => $this->input('event_date') ?: null,
-            'external_link' => $this->input('external_link') ?: null,
         ];
+
+        if ($hasExtLinkUpdate) {
+            $updateData['external_link'] = $this->input('external_link') ?: null;
+        }
 
         // Upload new file if provided
         $fileData = $this->uploadFile('file', 'portfolio');

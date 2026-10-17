@@ -175,7 +175,7 @@ class Controller
         $newName = uniqid('file_', true) . '.' . $ext;
         $uploadDir = UPLOAD_PATH . ($subDir ? '/' . trim($subDir, '/') : '');
         if (!is_dir($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
+            @mkdir($uploadDir, 0775, true);
         }
         $destination = $uploadDir . '/' . $newName;
 
@@ -264,7 +264,7 @@ class Controller
     {
         $thumbDir = $dir . '/thumbs';
         if (!is_dir($thumbDir)) {
-            mkdir($thumbDir, 0755, true);
+            @mkdir($thumbDir, 0775, true);
         }
 
         $thumbPath = $thumbDir . '/thumb_' . $name;
