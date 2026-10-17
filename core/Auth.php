@@ -110,10 +110,13 @@ class Auth
     }
 
     /**
-     * Check if user has specific role
+     * Check if user has specific role (accepts string or array of roles)
      */
-    public static function hasRole(string $role): bool
+    public static function hasRole(string|array $role): bool
     {
+        if (is_array($role)) {
+            return self::hasAnyRole($role);
+        }
         return Session::get('user_role') === $role;
     }
 

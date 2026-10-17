@@ -214,7 +214,7 @@ $total = ($d['risk_low_count'] ?? 0) + ($d['risk_medium_count'] ?? 0) + ($d['ris
                 ทำเนียบความเป็นเลิศ</a>
             <a href="<?= url('admin/reports') ?>" class="btn btn-sm btn-outline" style="border-radius:10px;">📋
                 รายงาน</a>
-            <?php if (Auth::hasRole(['admin'])): ?>
+            <?php if (Auth::hasRole('admin')): ?>
                 <a href="<?= url('admin/users') ?>" class="btn btn-sm btn-outline" style="border-radius:10px;">👤
                     จัดการผู้ใช้</a>
                 <a href="<?= url('admin/categories') ?>" class="btn btn-sm btn-outline" style="border-radius:10px;">🏷️
