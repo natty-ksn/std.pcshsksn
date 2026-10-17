@@ -264,11 +264,12 @@
     <!-- Premium Hero -->
     <div class="showcase-hero">
         <div style="position: relative; z-index: 2;">
-            <div class="showcase-eyebrow">★ Executive Showcase Console</div>
-            <h1 class="showcase-title">หอเกียรติยศดิจิทัล<br>PCSHS KSN</h1>
+            <div class="showcase-eyebrow">★ ทำเนียบผลงานนักเรียนดีเด่น</div>
+            <h1 class="showcase-title">หอเกียรติยศผลงานนักเรียน<br>PCSHS KSN</h1>
             <p class="showcase-sub">
-                คัดสรรผลงานเด่นที่ผ่านการรับรองจากครู เพื่อนำเสนอต่อแขกผู้ทรงเกียรติและฝ่ายบริหาร
-                สะท้อนคุณภาพการศึกษาและศักยภาพของนักเรียนโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์
+                รวบรวมผลงานและโครงงานของนักเรียนที่ผ่านการประเมินและรับรองคุณภาพ
+                เพื่อการนำเสนอเชิงประจักษ์ต่อคณะผู้บริหารและผู้ทรงคุณวุฒิ
+                สะท้อนศักยภาพของนักเรียนโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์
             </p>
 
             <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
@@ -294,7 +295,7 @@
                 </div>
                 <div class="stat-cell">
                     <div class="num"><?= number_format((int) $stats['featured_count']) ?></div>
-                    <div class="lbl">ผลงานเด่นที่ปักหมุด</div>
+                    <div class="lbl">ผลงานระดับดีเด่น</div>
                 </div>
                 <div class="stat-cell">
                     <div class="num"><?= number_format((int) $stats['student_count']) ?></div>
@@ -338,8 +339,8 @@
     <?php if (empty($works)): ?>
         <div class="text-center py-5" style="background: #fff; border-radius: 18px; padding: 80px;">
             <div style="font-size: 4rem;">🏛️</div>
-            <h3 class="mt-3">ยังไม่มีผลงานใน Showcase</h3>
-            <p class="text-muted">ผลงานจะปรากฏในหน้านี้เมื่อครูได้รับรอง (Verified) แล้ว</p>
+            <h3 class="mt-3">ยังไม่มีรายการผลงานดีเด่นในระบบ</h3>
+            <p class="text-muted">ผลงานจะปรากฏในส่วนนี้เมื่อผ่านการตรวจรับรองจากครูที่ปรึกษาเรียบร้อยแล้ว</p>
         </div>
     <?php else: ?>
         <div class="gallery-grid">

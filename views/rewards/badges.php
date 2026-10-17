@@ -1,7 +1,7 @@
 <?php
-$pageTitle = 'ห้องเกียรติยศ (Badges)';
+$pageTitle = 'ทำเนียบเหรียญรางวัลความสำเร็จ';
 /**
- * Badge Collection View — Phase 5 Gamification
+ * Badge Collection View — Gamification
  */
 $summary = $summary ?? ['total_badges' => 0, 'earned' => 0, 'progress_pct' => 0, 'by_tier' => [], 'recent' => []];
 $allDefs = $allDefs ?? [];
@@ -12,8 +12,8 @@ $newBadges = $newBadges ?? ['new_badges' => [], 'total' => 0];
 <!-- Header -->
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
     <div>
-        <h1 style="font-size:1.8rem; font-weight:900; color:#0f172a; margin:0 0 4px;">🏅 ห้องเกียรติยศ</h1>
-        <p style="color:#64748b; font-size:0.95rem; margin:0;">Badge Collection — สะสมเหรียญเพื่อแสดงความสามารถ</p>
+        <h1 style="font-size:1.8rem; font-weight:900; color:#0f172a; margin:0 0 4px;">🏅 ทำเนียบเหรียญรางวัลความสำเร็จ</h1>
+        <p style="color:#64748b; font-size:0.95rem; margin:0;">สะสมเหรียญรางวัลเพื่อสะท้อนความก้าวหน้าและทักษะรอบด้าน</p>
     </div>
     <div class="d-flex gap-2">
         <a href="<?= url('rewards') ?>" class="btn btn-sm" style="border-radius:10px; background:#f1f5f9; color:#334155; font-weight:600; text-decoration:none; padding:8px 16px;">🎁 แลกรางวัล</a>

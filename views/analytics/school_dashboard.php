@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'School Analytics Dashboard';
+$pageTitle = 'รายงานสถิติภาพรวมสถานศึกษา';
 /**
  * School Analytics Dashboard View — สำหรับผู้บริหาร
  * Redesigned: Compact, Polished, Data-Rich
@@ -13,8 +13,8 @@ $total = ($d['risk_low_count'] ?? 0) + ($d['risk_medium_count'] ?? 0) + ($d['ris
 <!-- Header -->
 <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
     <div>
-        <h1 style="font-size:1.5rem; font-weight:800; color:#1e293b; margin:0 0 4px;">📊 School Analytics Dashboard</h1>
-        <p style="color:#64748b; font-size:0.9rem; margin:0;">ข้อมูลภาพรวมโรงเรียน — สำหรับผู้บริหาร</p>
+        <h1 style="font-size:1.5rem; font-weight:800; color:#1e293b; margin:0 0 4px;">📊 รายงานสถิติภาพรวมสถานศึกษา</h1>
+        <p style="color:#64748b; font-size:0.9rem; margin:0;">ข้อมูลสารสนเทศทางการศึกษาและผลสัมฤทธิ์ — สำหรับฝ่ายบริหาร</p>
     </div>
     <div class="d-flex align-items-center gap-2">
         <span style="background:#f1f5f9; padding:6px 14px; border-radius:20px; font-size:0.8rem; color:#64748b;">📅
@@ -39,7 +39,7 @@ $total = ($d['risk_low_count'] ?? 0) + ($d['risk_medium_count'] ?? 0) + ($d['ris
     <div class="stat-card green">
         <div class="stat-card-icon">🔬</div>
         <div class="stat-card-value"><?= $d['active_projects'] ?? 0 ?></div>
-        <div class="stat-card-label">โครงการที่กำลังทำ</div>
+        <div class="stat-card-label">โครงงานที่กำลังดำเนินการ</div>
     </div>
     <div class="stat-card orange">
         <div class="stat-card-icon">📈</div>
@@ -80,14 +80,14 @@ $total = ($d['risk_low_count'] ?? 0) + ($d['risk_medium_count'] ?? 0) + ($d['ris
     <div>
         <div class="card mb-4">
             <div class="card-header">
-                <h3 style="font-size:1rem; font-weight:700; margin:0;">🚨 ความเสี่ยงนักเรียน</h3>
+                <h3 style="font-size:1rem; font-weight:700; margin:0;">🚨 การเฝ้าระวังช่วยเหลือนักเรียน</h3>
             </div>
             <div class="card-body">
                 <div class="d-flex gap-2 mb-3" style="justify-content:space-around;">
                     <div class="text-center">
                         <div style="font-size:1.8rem;">🟢</div>
                         <div style="font-weight:800; font-size:1.2rem;"><?= $d['risk_low_count'] ?? 0 ?></div>
-                        <div style="font-size:0.7rem; color:#94a3b8;">ต่ำ</div>
+                        <div style="font-size:0.7rem; color:#94a3b8;">ปกติ/ต่ำ</div>
                     </div>
                     <div class="text-center">
                         <div style="font-size:1.8rem;">🟡</div>
@@ -102,7 +102,7 @@ $total = ($d['risk_low_count'] ?? 0) + ($d['risk_medium_count'] ?? 0) + ($d['ris
                     <div class="text-center">
                         <div style="font-size:1.8rem;">🔴</div>
                         <div style="font-weight:800; font-size:1.2rem;"><?= $d['risk_critical_count'] ?? 0 ?></div>
-                        <div style="font-size:0.7rem; color:#94a3b8;">วิกฤต</div>
+                        <div style="font-size:0.7rem; color:#94a3b8;">เร่งด่วน</div>
                     </div>
                 </div>
                 <?php if ($total > 0): ?>
@@ -120,19 +120,19 @@ $total = ($d['risk_low_count'] ?? 0) + ($d['risk_medium_count'] ?? 0) + ($d['ris
         <!-- Engagement -->
         <div class="card">
             <div class="card-header">
-                <h3 style="font-size:1rem; font-weight:700; margin:0;">⚡ Engagement 30 วัน</h3>
+                <h3 style="font-size:1rem; font-weight:700; margin:0;">⚡ การมีส่วนร่วมในรอบ 30 วัน</h3>
             </div>
             <div class="card-body">
                 <div class="d-flex gap-3" style="justify-content:space-around;">
                     <div class="text-center">
                         <div style="font-size:1.5rem; font-weight:800; color:#6366f1;">
                             <?= $d['active_students_30d'] ?? 0 ?></div>
-                        <div style="font-size:0.75rem; color:#94a3b8;">นักเรียนใช้งาน</div>
+                        <div style="font-size:0.75rem; color:#94a3b8;">นักเรียนเข้าใช้งาน</div>
                     </div>
                     <div class="text-center">
                         <div style="font-size:1.5rem; font-weight:800; color:#10b981;"><?= $d['logbooks_30d'] ?? 0 ?>
                         </div>
-                        <div style="font-size:0.75rem; color:#94a3b8;">Logbook ใหม่</div>
+                        <div style="font-size:0.75rem; color:#94a3b8;">บันทึกก้าวหน้าใหม่</div>
                     </div>
                 </div>
             </div>
@@ -143,7 +143,7 @@ $total = ($d['risk_low_count'] ?? 0) + ($d['risk_medium_count'] ?? 0) + ($d['ris
     <div>
         <div class="card mb-4">
             <div class="card-header">
-                <h3 style="font-size:1rem; font-weight:700; margin:0;">🏫 นักเรียนตามชั้น</h3>
+                <h3 style="font-size:1rem; font-weight:700; margin:0;">🏫 จำนวนนักเรียนตามห้องเรียน</h3>
             </div>
             <div class="card-body" style="padding:12px;">
                 <?php if (!empty($d['students_by_class'])): ?>
@@ -168,12 +168,12 @@ $total = ($d['risk_low_count'] ?? 0) + ($d['risk_medium_count'] ?? 0) + ($d['ris
             <div class="card-body" style="padding:12px;">
                 <?php
                 $statusLabels = [
-                    'draft' => '📝 ร่าง',
-                    'proposal_submitted' => '📤 เสนอแล้ว',
-                    'proposal_approved' => '✅ อนุมัติ',
-                    'in_progress' => '🔄 กำลังทำ',
-                    'completed' => '🏆 เสร็จแล้ว',
-                    'archived' => '📦 เก็บถาวร',
+                    'draft' => '📝 ร่างข้อเสนอ',
+                    'proposal_submitted' => '📤 ยื่นข้อเสนอแล้ว',
+                    'proposal_approved' => '✅ อนุมัติหัวข้อ',
+                    'in_progress' => '🔄 กำลังดำเนินการ',
+                    'completed' => '🏆 สำเร็จสมบูรณ์',
+                    'archived' => '📦 จัดเก็บถาวร',
                 ];
                 $totalProjects = !empty($d['project_status_dist']) ? array_sum(array_column($d['project_status_dist'], 'count')) : 0;
                 ?>
@@ -202,26 +202,29 @@ $total = ($d['risk_low_count'] ?? 0) + ($d['risk_medium_count'] ?? 0) + ($d['ris
 <!-- Quick Actions -->
 <div class="card">
     <div class="card-header">
-        <h3 style="font-size:1rem; font-weight:700; margin:0;">🔗 ลิงก์ด่วน</h3>
+        <h3 style="font-size:1rem; font-weight:700; margin:0;">🔗 เมนูเข้าถึงด่วน</h3>
     </div>
     <div class="card-body">
         <div class="d-flex gap-2 flex-wrap">
             <a href="<?= url('analytics/early-warning') ?>" class="btn btn-sm"
-                style="background:#fffbeb; color:#92400e; border-radius:10px; font-weight:600;">🚨 Early Warning</a>
+                style="background:#fffbeb; color:#92400e; border-radius:10px; font-weight:600;">🚨 ระบบเฝ้าระวังช่วยเหลือนักเรียน</a>
             <a href="<?= url('teacher/students') ?>" class="btn btn-sm btn-outline" style="border-radius:10px;">👥
-                รายชื่อนักเรียน</a>
+                ข้อมูลนักเรียน</a>
             <a href="<?= url('executive/excellence') ?>" class="btn btn-sm btn-outline" style="border-radius:10px;">🏆
-                ทำเนียบความเป็นเลิศ</a>
+                ทำเนียบผลงานดีเด่น</a>
             <a href="<?= url('admin/reports') ?>" class="btn btn-sm btn-outline" style="border-radius:10px;">📋
-                รายงาน</a>
+                รายงานสารสนเทศ</a>
             <?php if (Auth::hasRole('admin')): ?>
                 <a href="<?= url('admin/users') ?>" class="btn btn-sm btn-outline" style="border-radius:10px;">👤
                     จัดการผู้ใช้</a>
                 <a href="<?= url('admin/categories') ?>" class="btn btn-sm btn-outline" style="border-radius:10px;">🏷️
                     หมวดหมู่</a>
                 <a href="<?= url('admin/settings') ?>" class="btn btn-sm btn-outline" style="border-radius:10px;">⚙️
-                    ตั้งค่า</a>
+                    ตั้งค่าระบบ</a>
             <?php endif; ?>
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </div>

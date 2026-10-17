@@ -121,7 +121,7 @@
         const category = catSelect.options[catSelect.selectedIndex].text;
 
         if (!description || description.length < 5) {
-            alert('กรุณาพิมพ์โน้ตหรือรายละเอียดเบื้องต้นก่อนกดปุ่มนี้ครับ');
+            alert('กรุณากรอกรายละเอียดผลงานเบื้องต้นก่อนใช้งาน');
             return;
         }
 

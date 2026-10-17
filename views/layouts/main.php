@@ -859,7 +859,7 @@
                 <div class="nav-section">
                     <div class="nav-section-title">เมนูหลัก</div>
                     <a href="<?= url('dashboard') ?>" class="nav-item <?= isActivePage('dashboard') ?>">
-                        <span class="nav-item-icon">📊</span> แผงหน้าหลัก
+                        <span class="nav-item-icon">📊</span> หน้าหลัก
                     </a>
                     <a href="<?= url('profile') ?>" class="nav-item <?= isActivePage('profile') ?>">
                         <span class="nav-item-icon">👤</span> ข้อมูลส่วนตัว
@@ -884,7 +884,7 @@
                             </a>
                             <a href="<?= url('academics') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('academics') ?>">
-                                📝 ข้อมูลการเรียน
+                                📝 ข้อมูลผลการเรียน
                             </a>
                             <a href="<?= url('interests') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('interests') ?>">
@@ -905,7 +905,7 @@
                             </a>
                             <a href="<?= url('projects/create') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('projects/create') ?>">
-                                ✨ เสนอหัวข้อใหม่
+                                ➕ เสนอโครงงานใหม่
                             </a>
                         </div>
                     </div>
@@ -914,22 +914,22 @@
                     <div class="nav-section collapsable" id="nav-future">
                         <div class="nav-section-title" onclick="toggleNav('nav-future')"
                             style="cursor:pointer; user-select:none;">
-                            การวางแผนอนาคต <span class="nav-toggle" id="toggle-nav-future">▾</span>
+                            เป้าหมายและการแนะแนว <span class="nav-toggle" id="toggle-nav-future">▾</span>
                         </div>
                         <div class="nav-sub">
                             <a href="<?= url('goals') ?>" class="nav-item nav-sub-item <?= isActivePage('goals') ?>">
-                                🎯 เป้าหมายการศึกษา
+                                🎯 เป้าหมายศึกษาต่อ
                             </a>
                             <a href="<?= url('tcas-readiness') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('tcas-readiness') ?>">
-                                🎯 TCAS Readiness
+                                📈 ความพร้อม TCAS
                             </a>
                             <a href="<?= url('assessment') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('assessment') ?>">
-                                💡 ประเมินตนเอง (RIASEC)
+                                💡 แบบประเมินความถนัด (RIASEC)
                             </a>
                             <a href="<?= url('ai-guide') ?>" class="nav-item nav-sub-item <?= isActivePage('ai-guide') ?>">
-                                🤖 AI แนะแนวการศึกษา
+                                🤖 AI ผู้ช่วยวางแผนการเรียน
                             </a>
                             <a href="<?= url('ai/field-readiness') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('ai/field-readiness') ?>">
@@ -937,22 +937,22 @@
                             </a>
                             <a href="<?= url('ai/tcas-advisor') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('ai/tcas-advisor') ?>">
-                                🎓 TCAS AI Advisor
+                                🎓 วางแผนยื่นพอร์ต TCAS
                             </a>
                             <a href="<?= url('ai/portfolio-audit') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('ai/portfolio-audit') ?>">
-                                🔍 AI ตรวจคุณภาพพอร์ต
+                                🔍 ตรวจสอบจุดเด่นพอร์ต
                             </a>
                             <a href="<?= url('opportunities') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('opportunities') ?>">
-                                🚀 โอกาสและการแข่งขัน
+                                🚀 โอกาสและกิจกรรมแข่งขัน
                             </a>
                             <a href="<?= url('rewards') ?>" class="nav-item nav-sub-item <?= isActivePage('rewards') ?>">
-                                🎁 The Exchange
+                                🎁 แลกของรางวัล
                             </a>
                             <a href="<?= url('rewards/badges') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('rewards/badges') ?>">
-                                🏅 เหรียญตราความสำเร็จ
+                                🏅 เหรียญรางวัลความสำเร็จ
                             </a>
                         </div>
                     </div>
@@ -960,14 +960,14 @@
                     <!-- Profile 360 -->
                     <div class="nav-section">
                         <a href="<?= url('profile/360') ?>" class="nav-item <?= isActivePage('profile/360') ?>">
-                            <span class="nav-item-icon">🎓</span> Student 360° Profile
+                            <span class="nav-item-icon">🎓</span> โปรไฟล์รอบด้าน (360°)
                         </a>
                     </div>
 
                     <!-- Rewards Shop -->
                     <div class="nav-section">
                         <a href="<?= url('shop') ?>" class="nav-item <?= isActivePage('shop') ?>">
-                            <span class="nav-item-icon">🛍️</span> Rewards Shop
+                            <span class="nav-item-icon">🛍️</span> ร้านแลกของรางวัล
                         </a>
                     </div>
                 <?php endif; ?>
@@ -981,31 +981,31 @@
                         <div class="nav-sub">
                             <a href="<?= url('teacher/students') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('teacher/students') ?>">
-                                👥 รายชื่อนักเรียน
+                                👥 ข้อมูลนักเรียน
                             </a>
                             <a href="<?= url('advisor/projects') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('advisor/projects') ?>">
-                                🧑‍🔬 ที่ปรึกษาโครงงาน
+                                🧑‍🔬 โครงงานในที่ปรึกษา
                             </a>
                             <a href="<?= url('teacher/pending-reviews') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('teacher/pending-reviews') ?>">
-                                ✅ ตรวจงานเร่งด่วน (Bulk)
+                                ✅ ตรวจรับรองผลงาน (กลุ่ม)
                             </a>
                             <a href="<?= url('teacher/quick-sweep') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('teacher/quick-sweep') ?>">
-                                🛰️ Quick Sweep คุณภาพ
+                                ⚡ ตรวจคัดกรองผลงานด่วน
                             </a>
                             <a href="<?= url('mentor/intelligence') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('mentor/intelligence') ?>">
-                                🕵️‍♂️ ติดตามนักเรียน (Mentor)
+                                📋 ติดตามการให้คำปรึกษา
                             </a>
                             <a href="<?= url('analytics/early-warning') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('analytics/early-warning') ?>">
-                                🚨 Early Warning System
+                                🚨 ระบบเฝ้าระวังช่วยเหลือนักเรียน
                             </a>
                             <a href="<?= url('academics') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('academics') ?>">
-                                📝 จัดการผลการเรียน
+                                📝 บันทึกผลการเรียน
                             </a>
                         </div>
                     </div>
@@ -1031,19 +1031,19 @@
                             </a>
                             <a href="<?= url('analytics/dashboard') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('analytics/dashboard') ?>">
-                                📊 Analytics Dashboard
+                                📊 สถิติภาพรวมโรงเรียน
                             </a>
                             <a href="<?= url('analytics/early-warning') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('analytics/early-warning') ?>">
-                                🚨 Early Warning
+                                🚨 เฝ้าระวังช่วยเหลือนักเรียน
                             </a>
                             <a href="<?= url('admin/logs') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('admin/logs') ?>">
-                                📜 ประวัติใช้งาน
+                                📜 ประวัติการใช้งานระบบ
                             </a>
                             <a href="<?= url('admin/reports') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('admin/reports') ?>">
-                                📈 รายงานสถิติ
+                                📈 รายงานสารสนเทศทางการศึกษา
                             </a>
                             <a href="<?= url('admin/settings') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('admin/settings') ?>">
@@ -1066,40 +1066,40 @@
                         <div class="nav-sub">
                             <a href="<?= url('executive/summary') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('executive/summary') ?>">
-                                📊 สรุปประมวลผลรวม
+                                📊 สรุปสถิติภาพรวมสถานศึกษา
                             </a>
                             <a href="<?= url('executive/ews') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('executive/ews') ?>">
-                                🚨 ระบบเฝ้าระวัง (EWS)
+                                🚨 ระบบเฝ้าระวังช่วยเหลือนักเรียน (EWS)
                             </a>
                             <a href="<?= url('analytics/early-warning') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('analytics/early-warning') ?>">
-                                🔔 แจ้งเตือนความเสี่ยงเชิงลึก
+                                ⚠️ รายการนักเรียนที่ต้องการช่วยเหลือ
                             </a>
                             <a href="<?= url('executive/tcas') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('executive/tcas') ?>">
-                                🎓 วิเคราะห์ความพร้อม TCAS
+                                🎓 ความพร้อมศึกษาต่อ (TCAS)
                             </a>
                             <a href="<?= url('executive/excellence') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('executive/excellence') ?>">
-                                🏆 สถิติผลงานดีเด่น
+                                🏆 ทำเนียบผลงานระดับดีเด่น
                             </a>
                             <a href="<?= url('executive/showcase') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('executive/showcase') ?>"
                                 style="color: var(--rank-gold); font-weight: 700;">
-                                🏛️ Showcase หอเกียรติยศ
+                                🏛️ หอเกียรติยศผลงานนักเรียน
                             </a>
                             <a href="<?= url('analytics/dashboard') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('analytics/dashboard') ?>">
-                                📈 แดชบอร์ดวิจัยและโครงงาน
+                                📈 สถิติโครงงานและงานวิจัย
                             </a>
                             <a href="<?= url('teacher/students') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('teacher/students') ?>">
-                                👥 รายชื่อนักเรียน 360°
+                                👥 ข้อมูลนักเรียนรายบุคคล
                             </a>
                             <a href="<?= url('admin/reports') ?>"
                                 class="nav-item nav-sub-item <?= isActivePage('admin/reports') ?>">
-                                📋 รายงานสถิติโรงเรียน
+                                📋 รายงานผลสัมฤทธิ์ทางการศึกษา
                             </a>
                         </div>
                     </div>
@@ -1260,7 +1260,7 @@
                 <a href="<?= url('analytics/dashboard') ?>"
                     class="mobile-nav-item <?= isActivePage('analytics/dashboard') ? 'active' : '' ?>">
                     <span class="mobile-nav-item-icon">📊</span>
-                    Analytics
+                    สถิติภาพรวม
                 </a>
             <?php endif; ?>
             <?php if (Auth::hasRole('executive')): ?>
@@ -1272,7 +1272,7 @@
                 <a href="<?= url('executive/ews') ?>"
                     class="mobile-nav-item <?= isActivePage('executive/ews') ? 'active' : '' ?>">
                     <span class="mobile-nav-item-icon">🚨</span>
-                    EWS
+                    เฝ้าระวัง
                 </a>
             <?php endif; ?>
             <a href="<?= url('notifications') ?>"

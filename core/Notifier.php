@@ -203,9 +203,9 @@ class Notifier
         self::send(
             $userId,
             self::TYPE_BADGE_AWARDED,
-            "🏅 ได้รับตรา {$badge['icon']} {$badge['name']}",
-            "ยินดีด้วย! คุณได้รับตรา \"{$badge['name']}\" " . ($badge['description'] ?? ''),
-            '/dashboard'
+            "🏅 ได้รับเหรียญรางวัล {$badge['icon']} {$badge['name']}",
+            "ขอแสดงความยินดี คุณได้รับเหรียญรางวัลความสำเร็จ \"{$badge['name']}\" " . ($badge['description'] ?? ''),
+            '/rewards/badges'
         );
     }
 
@@ -294,15 +294,19 @@ class Notifier
      */
     public static function earlyWarningAlert(int $studentUserId, string $riskLevel): void
     {
+        $riskMessage = match ($riskLevel) {
+            'critical' => 'ระบบตรวจพบความก้าวหน้าทางการเรียนและผลงานอยู่ในเกณฑ์ที่ต้องได้รับการดูแลช่วยเหลืออย่างใกล้ชิด กรุณาติดต่อครูที่ปรึกษา',
+            'high' => 'ระบบตรวจพบว่าผลสัมฤทธิ์และกิจกรรมสะสมยังไม่เป็นไปตามเป้าหมาย ขอแนะนำให้เข้าพบครูที่ปรึกษาเพื่อรับคำแนะนำ',
+            default => 'ขอแนะนำให้ทบทวนความก้าวหน้าทางการเรียนและสะสมผลงานเพิ่มเติม หรือปรึกษาครูที่ปรึกษา',
+        };
+
         // Notify the student
         self::send(
             $studentUserId,
             self::TYPE_EARLY_WARNING,
-            '⚠️ แจ้งเตือนความพร้อม',
-            $riskLevel === 'critical'
-            ? 'ระบบตรวจพบว่าความพร้อมของคุณอยู่ในระดับวิกฤต กรุณาพบที่ปรึกษาโดยเร็ว'
-            : 'ระบบตรวจพบว่าความพร้อมของคุณลดลง ควรปรึกษาที่ปรึกษา',
-            '/ai-guide'
+            '⚠️ ข้อความแจ้งเตือนการติดตามความก้าวหน้า',
+            $riskMessage,
+            '/goals'
         );
 
         // Notify advisor/teacher
@@ -323,11 +327,17 @@ class Notifier
             $studentName = $student['full_name'] ?? 'นักเรียน';
             $studentCode = $student['student_code'] ?? '';
 
+            $riskLabelTh = match ($riskLevel) {
+                'critical' => 'ภาวะวิกฤต (ต้องการช่วยเหลือทันที)',
+                'high' => 'ต้องการช่วยเหลือเร่งด่วน',
+                default => 'ต้องการการติดตาม',
+            };
+
             self::send(
                 (int) $advisor['advisor_id'],
                 self::TYPE_EARLY_WARNING,
-                "🚨 นักเรียนต้องการความช่วยเหลือ ({$riskLevel})",
-                "{$studentName} ({$studentCode}) มีความพร้อมระดับ {$riskLevel} ควรพบนักเรียนโดยเร็ว",
+                "🚨 นักเรียนในความดูแลอยู่ในข่ายเฝ้าระวัง: {$studentName}",
+                "{$studentName} ({$studentCode}) อยู่ในกลุ่มเฝ้าระวังระดับ: {$riskLabelTh} แนะนำให้นัดหมายเพื่อการดูแลช่วยเหลือ",
                 '/teacher/students'
             );
         }

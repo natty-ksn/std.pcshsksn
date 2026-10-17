@@ -1,4 +1,4 @@
-<?php $pageTitle = 'Quick Sweep — สแกนคุณภาพผลงาน'; ?>
+<?php $pageTitle = 'ตรวจสอบและคัดกรองผลงานด่วน (Quick Audit)'; ?>
 
 <div class="animate-fade-in" style="max-width: 1280px; margin: 0 auto;">
 
@@ -6,14 +6,14 @@
     <div class="glass-card mb-4" style="padding: 36px; border-radius: 24px; background: linear-gradient(135deg, #0f172a, #1e293b); color: #fff; border: none; box-shadow: var(--shadow-2xl);">
         <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
             <div>
-                <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: #94a3b8;">Phase 2 · Quality Control</div>
-                <h2 style="color: #fff; font-weight: 900; margin: 8px 0; letter-spacing: -0.5px;">🛰️ Quick Sweep — สแกนคุณภาพผลงานอัตโนมัติ</h2>
-                <p style="color: #cbd5e1; margin: 0;">ระบบตรวจหาผลงานที่ข้อมูลไม่สมบูรณ์ หรือมีความเสี่ยงด้านคุณภาพ ก่อนนำไปรับรอง</p>
+                <div style="font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; color: #94a3b8;">ระบบสนับสนุนการประเมินผลงานวิชาการ</div>
+                <h2 style="color: #fff; font-weight: 900; margin: 8px 0; letter-spacing: -0.5px;">⚡ ตรวจสอบและคัดกรองผลงานด่วน (Quick Audit)</h2>
+                <p style="color: #cbd5e1; margin: 0;">ระบบตรวจสอบความสมบูรณ์ของข้อมูลผลงานเบื้องต้น ก่อนดำเนินการตรวจรับรองทางวิชาการ</p>
             </div>
             <div style="text-align: right;">
-                <div style="font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px;">สแกนทั้งหมด</div>
+                <div style="font-size: 0.7rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px;">ผลงานที่ตรวจสอบ</div>
                 <div style="font-size: 2.4rem; font-weight: 900; color: #fff;"><?= (int) $scannedCount ?></div>
-                <div style="font-size: 0.85rem; color: #fca5a5;">พบจุดบกพร่อง <strong><?= count($report) ?></strong> รายการ</div>
+                <div style="font-size: 0.85rem; color: #fca5a5;">พบรายการที่ต้องปรับปรุง <strong><?= count($report) ?></strong> รายการ</div>
             </div>
         </div>
     </div>
@@ -35,8 +35,8 @@
                     <label class="form-label">เกณฑ์ขั้นต่ำของบทคัดย่อ (ตัวอักษร)</label>
                     <input type="number" name="min_desc" value="<?= (int) $minDescLen ?>" min="20" max="2000" class="form-control" style="width: 180px;">
                 </div>
-                <button type="submit" class="btn btn-primary">🔄 สแกนใหม่</button>
-                <a href="<?= url('teacher/quick-sweep?format=json' . ($classYear ? '&class_year=' . $classYear : '')) ?>" target="_blank" class="btn btn-secondary">📦 ดู JSON API</a>
+                <button type="submit" class="btn btn-primary">🔄 ตรวจสอบใหม่</button>
+                <a href="<?= url('teacher/quick-sweep?format=json' . ($classYear ? '&class_year=' . $classYear : '')) ?>" target="_blank" class="btn btn-secondary">📦 ดูข้อมูล JSON</a>
             </form>
         </div>
     </div>
@@ -44,17 +44,17 @@
     <?php if (empty($report)): ?>
         <div class="text-center py-5 glass-card" style="padding: 60px;">
             <div style="font-size: 4rem;">✨</div>
-            <h3 class="mt-3">ผลงานทุกชิ้นมีคุณภาพดีเยี่ยม</h3>
-            <p class="text-muted">ไม่พบจุดบกพร่องในผลงานที่ค้างตรวจ พร้อมนำเข้าสู่ขั้นตอนรับรอง</p>
+            <h3 class="mt-3">ข้อมูลผลงานมีความสมบูรณ์ครบถ้วน</h3>
+            <p class="text-muted">ไม่พบรายการที่ต้องปรับปรุงในผลงานที่รอตรวจ พร้อมเข้าสู่กระบวนการรับรองผลงาน</p>
         </div>
     <?php else: ?>
 
         <?php
         $sevColors = [
-            'critical' => ['#7f1d1d', '#fee2e2', '🚨', 'วิกฤติ'],
-            'issue' => ['#9a3412', '#ffedd5', '⚠️', 'จุดที่ควรแก้'],
+            'critical' => ['#7f1d1d', '#fee2e2', '🚨', 'ต้องแก้ไขเร่งด่วน'],
+            'issue' => ['#9a3412', '#ffedd5', '⚠️', 'ควรปรับปรุง'],
             'suggestion' => ['#1e40af', '#dbeafe', '💡', 'ข้อเสนอแนะ'],
-            'info' => ['#1f2937', '#f3f4f6', 'ℹ️', 'ข้อมูล'],
+            'info' => ['#1f2937', '#f3f4f6', 'ℹ️', 'ข้อมูลทั่วไป'],
         ];
         ?>
 

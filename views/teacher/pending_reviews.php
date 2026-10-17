@@ -39,7 +39,7 @@
         <div class="text-center py-5 glass-card">
             <div style="font-size: 4rem; opacity: 0.3;">🎉</div>
             <h3 class="mt-3">ไม่มีผลงานค้างตรวจ</h3>
-            <p class="text-muted">นักเรียนในสัดส่วนที่คุณเลือก ตรวจครบถ้วนหมดแล้วครับ</p>
+            <p class="text-muted">ผลงานของนักเรียนในเงื่อนไขที่เลือก ได้รับการตรวจครบถ้วนแล้ว</p>
         </div>
     <?php else: ?>
         <form id="bulkForm" method="POST" action="<?= url('teacher/bulk-verify') ?>">
@@ -59,12 +59,12 @@
                         <div class="form-group mb-0">
                             <input type="number" name="points" class="form-control form-control-sm" value="80" min="0" max="100" style="width: 100px;" title="คะแนนที่จะให้">
                         </div>
-                        <select name="bulk_action" class="form-control form-control-sm" style="width: 150px;">
-                            <option value="verify">✅ รับรอง (Verify)</option>
-                            <option value="reject">❌ ปฏิเสธ (Reject)</option>
+                        <select name="bulk_action" class="form-control form-control-sm" style="width: 160px;">
+                            <option value="verify">✅ รับรองผลงาน</option>
+                            <option value="reject">❌ ส่งกลับเพื่อแก้ไข</option>
                         </select>
-                        <button type="submit" class="btn btn-primary" onclick="return confirm('ยืนยันการประมวลผลตามจำนวนที่เลือก?')">
-                            🚀 ประมวลผลกลุ่ม
+                        <button type="submit" class="btn btn-primary" onclick="return confirm('ยืนยันการบันทึกผลการตรวจรับรองผลงานตามรายการที่เลือก?')">
+                            ✅ บันทึกผลการตรวจกลุ่ม
                         </button>
                     </div>
                 </div>

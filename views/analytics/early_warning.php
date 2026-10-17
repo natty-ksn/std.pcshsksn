@@ -1,19 +1,19 @@
 <?php
-$pageTitle = 'ระบบเฝ้าระวังความเสี่ยง (EWS)';
+$pageTitle = 'ระบบเฝ้าระวังและช่วยเหลือนักเรียน (Early Warning System)';
 /**
  * Early Warning System View
  */
 $riskLabels = [
-    'low' => ['label' => '🟢 ต่ำ', 'class' => 'success'],
-    'medium' => ['label' => '🟡 ปานกลาง', 'class' => 'warning'],
-    'high' => ['label' => '🟠 สูง', 'class' => 'danger'],
-    'critical' => ['label' => '🔴 วิกฤต', 'class' => 'danger'],
+    'low' => ['label' => '🟢 ปกติ / เฝ้าระวังต่ำ', 'class' => 'success'],
+    'medium' => ['label' => '🟡 ต้องติดตาม (ปานกลาง)', 'class' => 'warning'],
+    'high' => ['label' => '🟠 ต้องช่วยเหลือเร่งด่วน', 'class' => 'danger'],
+    'critical' => ['label' => '🔴 วิกฤต (ช่วยเหลือทันที)', 'class' => 'danger'],
 ];
 ?>
 
 <div class="page-header">
-    <h1>🚨 Early Warning System — ระบบแจ้งเตือนนักเรียนที่มีความเสี่ยง</h1>
-    <p class="text-muted">วิเคราะห์ความเสี่ยงอัตโนมัติจาก GPA, Portfolio, กิจกรรม, เป้าหมาย, และ Logbook</p>
+    <h1>🚨 ระบบเฝ้าระวังและช่วยเหลือนักเรียน (Early Warning System)</h1>
+    <p class="text-muted">วิเคราะห์ความเสี่ยงทางการเรียนและกิจกรรมรอบด้าน เพื่อการดูแลช่วยเหลือผู้เรียนอย่างทันท่วงที</p>
 </div>
 
 <!-- Summary -->
@@ -23,7 +23,7 @@ $riskLabels = [
             <div class="card-body text-center">
                 <div style="font-size:2em">🟢</div>
                 <div style="font-size:1.8em;font-weight:700"><?= $riskCounts['low'] ?></div>
-                <div class="text-muted">ความเสี่ยงต่ำ</div>
+                <div class="text-muted">ระดับปกติ / เฝ้าระวังต่ำ</div>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@ $riskLabels = [
             <div class="card-body text-center">
                 <div style="font-size:2em">🟡</div>
                 <div style="font-size:1.8em;font-weight:700"><?= $riskCounts['medium'] ?></div>
-                <div class="text-muted">ความเสี่ยงปานกลาง</div>
+                <div class="text-muted">ต้องติดตาม (ปานกลาง)</div>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@ $riskLabels = [
             <div class="card-body text-center">
                 <div style="font-size:2em">🟠</div>
                 <div style="font-size:1.8em;font-weight:700"><?= $riskCounts['high'] ?></div>
-                <div class="text-muted">ความเสี่ยงสูง</div>
+                <div class="text-muted">ต้องช่วยเหลือเร่งด่วน</div>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@ $riskLabels = [
             <div class="card-body text-center">
                 <div style="font-size:2em">🔴</div>
                 <div style="font-size:1.8em;font-weight:700"><?= $riskCounts['critical'] ?></div>
-                <div class="text-muted">ความเสี่ยงวิกฤต</div>
+                <div class="text-muted">ภาวะวิกฤต (ต้องช่วยเหลือทันที)</div>
             </div>
         </div>
     </div>
@@ -80,15 +80,15 @@ $riskLabels = [
             </div>
             <div class="col-md-2">
                 <select name="risk_level" class="form-control">
-                    <option value="">ทุกระดับความเสี่ยง</option>
-                    <option value="low" <?= ($filters['risk_level'] ?? '') === 'low' ? 'selected' : '' ?>>🟢 ต่ำ</option>
+                    <option value="">ทุกระดับการเฝ้าระวัง</option>
+                    <option value="low" <?= ($filters['risk_level'] ?? '') === 'low' ? 'selected' : '' ?>>🟢 เฝ้าระวังต่ำ</option>
                     <option value="medium" <?= ($filters['risk_level'] ?? '') === 'medium' ? 'selected' : '' ?>>🟡 ปานกลาง</option>
-                    <option value="high" <?= ($filters['risk_level'] ?? '') === 'high' ? 'selected' : '' ?>>🟠 สูง</option>
+                    <option value="high" <?= ($filters['risk_level'] ?? '') === 'high' ? 'selected' : '' ?>>🟠 เร่งด่วน</option>
                     <option value="critical" <?= ($filters['risk_level'] ?? '') === 'critical' ? 'selected' : '' ?>>🔴 วิกฤต</option>
                 </select>
             </div>
             <div class="col-md-2">
-                <button type="submit" class="btn btn-primary w-100">🔍 กรอง</button>
+                <button type="submit" class="btn btn-primary w-100">🔍 ค้นหา/กรอง</button>
             </div>
         </form>
     </div>
@@ -96,20 +96,20 @@ $riskLabels = [
 
 <!-- Student Table -->
 <div class="card">
-    <div class="card-header"><strong>📋 รายชื่อนักเรียน <?= $total ?> คน</strong></div>
+    <div class="card-header"><strong>📋 รายชื่อนักเรียนในข่ายเฝ้าระวัง <?= $total ?> คน</strong></div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>นักเรียน</th>
-                        <th>ชั้น</th>
+                        <th>ข้อมูลนักเรียน</th>
+                        <th>ระดับชั้น</th>
                         <th>GPA</th>
-                        <th>Portfolio</th>
-                        <th>คะแนนรวม</th>
-                        <th>ระดับความเสี่ยง</th>
-                        <th>ข้อเสนอแนะ</th>
-                        <th>จัดการ</th>
+                        <th>จำนวนผลงาน</th>
+                        <th>ดัชนีความพร้อม</th>
+                        <th>ระดับการเฝ้าระวัง</th>
+                        <th>ข้อเสนอแนะเชิงพัฒนา</th>
+                        <th>การดำเนินการ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -154,11 +154,10 @@ $riskLabels = [
                                 <?php endif; ?>
                             </td>
                             <td>
-                                <a href="<?= url('teacher/student/' . $studentProfileId) ?>" class="btn btn-sm btn-info">👁️
-                                    ดู</a>
+                                <a href="<?= url('teacher/student/' . $studentProfileId) ?>" class="btn btn-sm btn-info">👁️ ดูโปรไฟล์</a>
                                 <?php if (in_array($s['risk_level'], ['high', 'critical'])): ?>
                                     <button onclick="notifyRisk(<?= $s['user_id'] ?>, '<?= $s['risk_level'] ?>')"
-                                        class="btn btn-sm btn-warning">📩 แจ้งเตือน</button>
+                                        class="btn btn-sm btn-warning">📩 ส่งข้อความเตือน</button>
                                 <?php endif; ?>
                             </td>
                         </tr>

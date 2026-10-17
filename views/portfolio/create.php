@@ -125,7 +125,7 @@
                     <div style="background: var(--blue-50); padding: 15px; border-radius: 12px; border: 1px solid var(--blue-100); margin-bottom: 10px;">
                         <span style="font-size: 0.85rem; color: var(--blue-700);">
                             💡 <strong>งานกลุ่ม:</strong> หากงานนี้มีสมาชิกคนอื่นร่วมทำด้วย ให้พิมพ์ชื่อเพื่อนเพื่อเชิญเข้าร่วมผลงาน 
-                            <br>เมื่องานถูกบันทึก เพื่อนได้รับสิทธิ์ยืนยัน ผลงานนี้จะไปปรากฏใน Portfolio ของเพื่อนโดยอัตโนมัติครับ
+                            <br>เมื่อบันทึกผลงานและเพื่อนกดยืนยัน ผลงานนี้จะแสดงในพอร์ตโฟลิโอของเพื่อนร่วมทีมด้วยโดยอัตโนมัติ
                         </span>
                     </div>
                     
@@ -249,7 +249,7 @@
         const category = catSelect.options[catSelect.selectedIndex].text;
 
         if (!description || description.length < 5) {
-            alert('กรุณาพิมพ์โน้ตหรือรายละเอียดเบื้องต้นก่อนกดปุ่มนี้ครับ');
+            alert('กรุณากรอกรายละเอียดผลงานเบื้องต้นก่อนใช้งาน');
             return;
         }
 

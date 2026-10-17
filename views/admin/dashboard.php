@@ -4,7 +4,7 @@
     <div class="page-header">
         <div>
             <h1 class="page-title">ศูนย์บริหารจัดการระบบสารสนเทศ (Management System)</h1>
-            <p class="page-subtitle">ภาพรวมสถานะและการใช้งานระบบ e-Portfolio โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย</p>
+            <p class="page-subtitle">ภาพรวมสถานะและการใช้งานระบบ e-Portfolio โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์</p>
         </div>
     </div>
 

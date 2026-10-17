@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Student 360° Profile';
+$pageTitle = 'ข้อมูลโปรไฟล์รอบด้าน 360°';
 /**
  * Student 360° Profile View
  */
@@ -14,7 +14,7 @@ $badges = $profile['badges'];
 <div class="page-header">
     <div class="d-flex justify-content-between align-items-center">
         <div>
-            <h1>🎓 Student 360° Profile</h1>
+            <h1>🎓 ข้อมูลโปรไฟล์รอบด้าน (360° Profile)</h1>
             <p class="text-muted"><?= e($profile['full_name']) ?> — <?= e($profile['student_code']) ?> | ชั้น
                 ม.<?= $profile['class_year'] ?>/<?= e($profile['class_room']) ?></p>
         </div>
@@ -23,7 +23,7 @@ $badges = $profile['badges'];
                 title="ดาวน์โหลดข้อมูลส่วนตัวของคุณ (PDPA/GDPR)">
                 📥 ดาวน์โหลดข้อมูลของฉัน (PDPA)
             </a>
-            <a href="<?= url('profile') ?>" class="btn btn-secondary">← โปรไฟล์ปกติ</a>
+            <a href="<?= url('profile') ?>" class="btn btn-secondary">← ข้อมูลส่วนตัว</a>
         </div>
     </div>
 </div>
@@ -53,7 +53,7 @@ $badges = $profile['badges'];
             <div class="card-body text-center">
                 <div class="stat-icon" style="font-size:2em">🏆</div>
                 <div class="stat-value"><?= count($badges) ?></div>
-                <div class="stat-label">ตราที่ได้รับ</div>
+                <div class="stat-label">เหรียญรางวัลที่ได้รับ</div>
             </div>
         </div>
     </div>

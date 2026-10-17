@@ -26,7 +26,7 @@
         <div class="card mb-3 slide-up" style="border: 1px solid var(--primary-100); background: linear-gradient(to bottom right, white, #f8fafc);">
             <div class="card-header" style="background: transparent;">
                 <h3 style="display: flex; align-items: center; gap: 10px;">
-                    📊 กราฟวิเคราะห์ความสอดคล้อง (Success Intersection)
+                    📊 แผนภาพวิเคราะห์ความสอดคล้องของเป้าหมายและผลงาน
                 </h3>
             </div>
             <div class="card-body">
@@ -35,32 +35,32 @@
                         <canvas id="triangulationChart"></canvas>
                     </div>
                     <div>
-                        <h4 style="font-size: 1.1rem; color: var(--primary-800); margin-bottom: 18px;">💡 รู้จัก "แผนที่นำทางตัวคุณ"</h4>
+                        <h4 style="font-size: 1.1rem; color: var(--primary-800); margin-bottom: 18px;">💡 คำอธิบายองค์ประกอบแผนภาพ</h4>
                         <div style="display: flex; flex-direction: column; gap: 16px;">
                             <div style="display: flex; align-items: flex-start; gap: 12px;">
                                 <div style="width: 16px; height: 16px; border-radius: 4px; background: rgba(79, 70, 229, 0.8); margin-top: 2px;"></div>
                                 <div>
-                                    <strong style="color: var(--gray-800);">🔵 พื้นที่สีน้ำเงิน: สิ่งที่คุณถนัด (Potential)</strong>
-                                    <p style="font-size: 0.8rem; color: var(--gray-600); margin-top: 2px;">นี่คือ "จุดแข็งตามธรรมชาติ" ของคุณ ยิ่งขอบเขตน้ำเงินกว้างเท่าไหร่ แสดงว่าคุณมีพรสวรรค์ที่ซ่อนอยู่เยอะมาก!</p>
+                                    <strong style="color: var(--gray-800);">🔵 พื้นที่สีน้ำเงิน: ความถนัดและความสนใจ (Potential)</strong>
+                                    <p style="font-size: 0.8rem; color: var(--gray-600); margin-top: 2px;">สะท้อนคะแนนจากแบบประเมินความถนัด RIASEC แสดงจุดเด่นตามธรรมชาติของคุณในแต่ละมิติ</p>
                                 </div>
                             </div>
                             <div style="display: flex; align-items: flex-start; gap: 12px;">
                                 <div style="width: 16px; height: 16px; border-radius: 4px; background: rgba(16, 185, 129, 0.8); margin-top: 2px;"></div>
                                 <div>
-                                    <strong style="color: var(--gray-800);">🟢 พื้นที่สีเขียว: สิ่งที่คุณทำ (Reality)</strong>
-                                    <p style="font-size: 0.8rem; color: var(--gray-600); margin-top: 2px;">คือ "ผลงานจริง" ที่คุณสร้างสรรค์แล้ว ทุกชิ้นงานที่เพิ่มลงใน Port จะช่วยขยายขอบเขตนี้ให้พุ่งทะยานขึ้นไป</p>
+                                    <strong style="color: var(--gray-800);">🟢 พื้นที่สีเขียว: ผลงานและกิจกรรมสะสม (Reality)</strong>
+                                    <p style="font-size: 0.8rem; color: var(--gray-600); margin-top: 2px;">สะท้อนผลงานและโครงงานที่คุณบันทึกไว้ในระบบ ยิ่งสะสมผลงานหลากหลาย พื้นที่ส่วนนี้จะยิ่งครอบคลุม</p>
                                 </div>
                             </div>
                             <div style="display: flex; align-items: flex-start; gap: 12px;">
                                 <div style="width: 16px; height: 16px; border-radius: 4px; border: 2px solid rgba(245, 158, 11, 1); background: transparent; margin-top: 2px;"></div>
                                 <div>
-                                    <strong style="color: var(--gray-800);">🟠 เส้นขอบสีส้ม: สิ่งที่ฝันต้องการ (Target)</strong>
-                                    <p style="font-size: 0.8rem; color: var(--gray-600); margin-top: 2px;">คือ "เส้นชัย" ของอาชีพในฝัน ช่วยไกด์ว่าเราควรเพิ่มผลงานด้านไหนอีกนิด เพื่อให้พิชิตเป้าหมายได้สำเร็จ</p>
+                                    <strong style="color: var(--gray-800);">🟠 เส้นขอบสีส้ม: คุณลักษณะเป้าหมายที่คาดหวัง (Target)</strong>
+                                    <p style="font-size: 0.8rem; color: var(--gray-600); margin-top: 2px;">เกณฑ์ที่แนะนำสำหรับสาขาวิชาที่คุณตั้งเป้าหมาย ช่วยให้เห็นว่าควรพัฒนาผลงานด้านใดเพิ่มเติม</p>
                                 </div>
                             </div>
                         </div>
                         <div style="margin-top: 24px; padding: 20px; background: linear-gradient(135deg, #fff, var(--primary-50)); border-radius: 16px; border: 1px solid var(--primary-100); font-size: 0.9rem; line-height: 1.6; color: var(--primary-900); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);">
-                            🚀 <strong>ภารกิจของคุณ:</strong> ลองขยาย "พื้นที่สีเขียว" ของเราให้พุ่งไปทับ "เส้นสีส้ม" ให้สมบูรณ์แบบที่สุด! ทุกการบันทึกผลงานในวันนี้ คือก้าวที่มั่นคงสู่ความฝันที่ยิ่งใหญ่ของคุณนะ!
+                            🎯 <strong>แนวทางการพัฒนา:</strong> มุ่งสร้างผลงานและกิจกรรมเพื่อขยายพื้นที่สีเขียวให้สอดคล้องกับเส้นสีส้ม ซึ่งจะช่วยเพิ่มความพร้อมในการยื่นพอร์ตโฟลิโอตามเป้าหมายที่ตั้งไว้
                         </div>
                     </div>
                 </div>
@@ -72,10 +72,10 @@
     <div class="card mb-4 slide-up" style="border: none; border-radius: var(--radius-2xl); box-shadow: var(--shadow-lg); overflow: hidden;">
         <div style="background: linear-gradient(135deg, var(--primary-600), var(--primary-800)); padding: 24px 32px; color: white;">
             <h3 style="color: white; margin: 0; font-size: 1.3rem; display: flex; align-items: center; gap: 10px;">
-                🎯 ตั้งเป้าหมายใหม่ (Create Educational Milestone)
+                🎯 กำหนดเป้าหมายการศึกษาใหม่
             </h3>
             <p style="color: rgba(255,255,255,0.8); font-size: 0.85rem; margin: 6px 0 0 0;">
-                กำหนดเป้าหมายเพื่อท้าทายตนเองและให้ AI วิเคราะห์ความพร้อมเพื่อเตรียมสะสมผลงาน
+                กำหนดคณะ สาขาวิชา หรือมหาวิทยาลัยที่สนใจ เพื่อให้ระบบวิเคราะห์ความพร้อมและแนะนำการสะสมผลงาน
             </p>
         </div>
         <div class="card-body" style="padding: 32px;">

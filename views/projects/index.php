@@ -197,21 +197,21 @@
 
     <div class="dashboard-header">
         <div class="dashboard-title">
-            <h1>โครงงานของฉัน (My Projects)</h1>
-            <p>ติดตามสถานะ อัปเดตความก้าวหน้า และส่งงานโครงงานวิทยาศาสตร์</p>
+            <h1>🔬 โครงงานวิทยาศาสตร์ของฉัน</h1>
+            <p>ติดตามสถานะ บันทึกความก้าวหน้า และส่งรายงานโครงงานวิทยาศาสตร์</p>
         </div>
         <a href="<?= url('projects/create') ?>" class="btn-create">
             <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-            เสนอหัวข้อใหม่
+            เสนอโครงงานใหม่
         </a>
     </div>
 
     <div class="project-grid">
         <?php if (empty($projects)): ?>
             <div class="empty-state">
-                <h3 style="color:#1e293b; font-size:1.5rem; margin-bottom:0.5rem;">ยังไม่มีโครงงานในระบบ</h3>
-                <p style="color:#64748b; margin-bottom:1.5rem;">คุณยังไม่ได้ส่งข้อเสนอโครงงานใดๆ เริ่มต้นสร้างโครงงานชิ้นแรกของคุณเลย!</p>
-                <a href="<?= url('projects/create') ?>" class="btn-create" style="display:inline-flex;">+ สร้างข้อเสนอโครงงาน</a>
+                <h3 style="color:#1e293b; font-size:1.5rem; margin-bottom:0.5rem;">ยังไม่มีข้อมูลโครงงาน</h3>
+                <p style="color:#64748b; margin-bottom:1.5rem;">คุณยังไม่มีรายการโครงงานในระบบ เริ่มต้นด้วยการยื่นข้อเสนอโครงงานใหม่ได้เลย</p>
+                <a href="<?= url('projects/create') ?>" class="btn-create" style="display:inline-flex;">+ เสนอโครงงานใหม่</a>
             </div>
         <?php else: ?>
             <?php foreach ($projects as $project): ?>
@@ -240,7 +240,7 @@
                         </div>
                     </div>
                     
-                    <a href="<?= url('projects/' . $project['id']) ?>" class="btn-view">ดูกระดานติดตามงาน &rarr;</a>
+                    <a href="<?= url('projects/' . $project['id']) ?>" class="btn-view">ดูรายละเอียดโครงงาน &rarr;</a>
                 </div>
             <?php endforeach; ?>
         <?php endif; ?>
