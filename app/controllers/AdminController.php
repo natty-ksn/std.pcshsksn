@@ -695,7 +695,8 @@ class AdminController extends Controller
      */
     public function dbDoctor(): void
     {
-        App::redirect('db_doctor.php');
+        require_once ROOT_PATH . '/public/db_doctor.php';
+        exit;
     }
 }
 

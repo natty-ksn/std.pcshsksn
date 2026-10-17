@@ -10,8 +10,12 @@
 declare(strict_types=1);
 
 // กำหนด Root Path และโหลดการตั้งค่าระบบ
-define('ROOT_PATH', dirname(__DIR__));
-define('CORE_PATH', ROOT_PATH . '/core');
+if (!defined('ROOT_PATH')) {
+    define('ROOT_PATH', dirname(__DIR__));
+}
+if (!defined('CORE_PATH')) {
+    define('CORE_PATH', ROOT_PATH . '/core');
+}
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
