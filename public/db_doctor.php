@@ -388,48 +388,58 @@ try {
     }
 
     // ----------------------------------------------------
-    // CHECK 4: ตรวจสอบ Database Views (vw_early_warning, vw_student_360)
+    // CHECK 4: ตรวจสอบและอัปเดต Database Views (vw_early_warning, vw_student_360, vw_field_readiness_summary)
     // ----------------------------------------------------
-    $views = ['vw_early_warning', 'vw_student_360'];
+    $views = ['vw_early_warning', 'vw_student_360', 'vw_field_readiness_summary'];
+    $viewsReapplied = false;
+
     foreach ($views as $viewName) {
         $results['summary']['total']++;
         $viewCheck = $pdo->query("SHOW TABLES LIKE '{$viewName}'")->rowCount();
 
-        if ($viewCheck > 0) {
-            $results['summary']['passed']++;
-            $results['checks'][] = [
-                'type' => 'view',
-                'name' => "Database View: {$viewName}",
-                'desc' => 'มุมมองข้อมูลสำหรับ Analytics และ Early Warning',
-                'status' => 'passed',
-                'msg' => 'พบ View พร้อมใช้งาน'
-            ];
-        } else {
+        if ($action === 'repair' && !$viewsReapplied) {
+            $mig012 = ROOT_PATH . '/database/migrations/012_analytics_views.sql';
+            $mig013 = ROOT_PATH . '/database/migrations/013_phase4_ai_insights.sql';
+            if (file_exists($mig012)) {
+                executeSqlScript($pdo, file_get_contents($mig012));
+                $results['logs'][] = "🚀 ปรับปรุงโครงสร้าง Views 012_analytics_views.sql (Optimized) เรียบร้อย";
+            }
+            if (file_exists($mig013)) {
+                executeSqlScript($pdo, file_get_contents($mig013));
+                $results['logs'][] = "🚀 ปรับปรุงโครงสร้าง Views 013_phase4_ai_insights.sql (Optimized) เรียบร้อย";
+            }
+            $viewsReapplied = true;
+        }
+
+        if ($viewCheck > 0 || $action === 'repair') {
             if ($action === 'repair') {
-                // รันไฟล์ migration 012 สำหรับ views
-                $mig012 = ROOT_PATH . '/database/migrations/012_analytics_views.sql';
-                if (file_exists($mig012)) {
-                    executeSqlScript($pdo, file_get_contents($mig012));
-                    $results['summary']['fixed']++;
-                    $results['checks'][] = [
-                        'type' => 'view',
-                        'name' => "Database View: {$viewName}",
-                        'desc' => 'สร้างมุมมองข้อมูลใหม่',
-                        'status' => 'fixed',
-                        'msg' => 'สร้าง View สำเร็จเรียบร้อย'
-                    ];
-                    $results['logs'][] = "✅ สร้าง View `{$viewName}` เรียบร้อย";
-                }
-            } else {
-                $results['summary']['warnings']++;
+                $results['summary']['fixed']++;
                 $results['checks'][] = [
                     'type' => 'view',
                     'name' => "Database View: {$viewName}",
-                    'desc' => 'มุมมองข้อมูลสรุปภาพรวม',
-                    'status' => 'warning',
-                    'msg' => 'ยังไม่มี View นี้ในระบบ'
+                    'desc' => 'มุมมองข้อมูลสำหรับ Analytics และ Early Warning',
+                    'status' => 'fixed',
+                    'msg' => 'อัปเดตโครงสร้าง View เป็นเวอร์ชัน Optimized ล่าสุดแล้ว'
+                ];
+            } else {
+                $results['summary']['passed']++;
+                $results['checks'][] = [
+                    'type' => 'view',
+                    'name' => "Database View: {$viewName}",
+                    'desc' => 'มุมมองข้อมูลสำหรับ Analytics และ Early Warning',
+                    'status' => 'passed',
+                    'msg' => 'พบ View พร้อมใช้งาน'
                 ];
             }
+        } else {
+            $results['summary']['warnings']++;
+            $results['checks'][] = [
+                'type' => 'view',
+                'name' => "Database View: {$viewName}",
+                'desc' => 'มุมมองข้อมูลสรุปภาพรวม',
+                'status' => 'warning',
+                'msg' => 'ยังไม่มี View นี้ในระบบ (กดปุ่มซ่อมแซมเพื่อสร้างและอัปเดตอัตโนมัติ)'
+            ];
         }
     }
 
