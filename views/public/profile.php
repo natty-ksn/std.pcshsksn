@@ -141,7 +141,7 @@
     <div class="print-only print-header">
         <img src="<?= App::asset('images/logo.png') ?>" alt="School Logo" style="height: 70px; margin-bottom: 10px; object-fit: contain;">
         <h2 style="font-size: 24px; font-weight: bold; margin: 0; color: #1e3a8a;">แฟ้มสะสมผลงานนักเรียน (e-Portfolio)</h2>
-        <p style="margin: 5px 0 0; color: #64748b;">โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร</p>
+        <p style="margin: 5px 0 0; color: #64748b;">โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์</p>
     </div>
 
     <!-- Header Section -->
@@ -238,7 +238,7 @@
 
     <!-- Print Footer -->
     <div class="print-only text-center" style="margin-top: 40px; padding-top: 20px; border-top: 1px dashed #cbd5e1; font-size: 0.8rem; color: #94a3b8;">
-        เอกสารนี้สร้างขึ้นจากระบบ E-Portfolio โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร<br>
+        เอกสารนี้สร้างขึ้นจากระบบ E-Portfolio โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์<br>
         วันที่พิมพ์: <?= date('d/m/Y H:i A') ?>
     </div>
 

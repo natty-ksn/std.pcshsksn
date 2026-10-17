@@ -877,7 +877,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Initial Data for `settings` (6 rows)
 INSERT INTO `settings` (`id`, `setting_key`, `setting_value`, `description`, `updated_at`) VALUES ('1', 'academic_year', '2569', 'ปีการศึกษาปัจจุบัน', '2026-03-15 16:27:14');
 INSERT INTO `settings` (`id`, `setting_key`, `setting_value`, `description`, `updated_at`) VALUES ('2', 'semester', '1', 'เทอมปัจจุบัน', '2026-03-15 16:27:14');
-INSERT INTO `settings` (`id`, `setting_key`, `setting_value`, `description`, `updated_at`) VALUES ('3', 'school_name', 'โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร', 'ชื่อโรงเรียน', '2026-03-15 16:27:14');
+INSERT INTO `settings` (`id`, `setting_key`, `setting_value`, `description`, `updated_at`) VALUES ('3', 'school_name', 'โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์', 'ชื่อโรงเรียน', '2026-03-15 16:27:14');
 INSERT INTO `settings` (`id`, `setting_key`, `setting_value`, `description`, `updated_at`) VALUES ('4', 'allow_sharing', '1', 'อนุญาตให้นักเรียนแชร์แฟ้มสะสมผลงาน (0=ปิด, 1=เปิด)', '2026-03-15 16:27:14');
 INSERT INTO `settings` (`id`, `setting_key`, `setting_value`, `description`, `updated_at`) VALUES ('5', 'gemini_api_key', '', 'API Key สำหรับเชื่อมต่อระบบ AI (Google Gemini)', '2026-10-17 14:21:22');
 INSERT INTO `settings` (`id`, `setting_key`, `setting_value`, `description`, `updated_at`) VALUES ('6', 'gemini_model', 'openai/gpt-oss-120b', 'โมเดล AI ที่ใช้ในการวิเคราะห์ข้อมูล (เช่น gemini-2.0-flash)', '2026-10-17 14:24:36');

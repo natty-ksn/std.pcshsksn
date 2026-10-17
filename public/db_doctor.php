@@ -508,10 +508,10 @@ try {
     }
 
     if ($action === 'repair') {
-        // อัปเดตชื่อโรงเรียนในตาราง settings ให้ถูกต้องเป็น มุกดาหาร
+        // อัปเดตชื่อโรงเรียนในตาราง settings ให้ถูกต้องเป็น กาฬสินธุ์
         try {
-            $pdo->exec("UPDATE settings SET setting_value = 'โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร' WHERE setting_key = 'school_name' OR setting_value LIKE '%กาฬสินธุ์%'");
-            $results['logs'][] = "🏫 ปรับปรุงชื่อโรงเรียนในตาราง settings เป็น 'โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร' เรียบร้อย";
+            $pdo->exec("UPDATE settings SET setting_value = 'โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์' WHERE setting_key = 'school_name' OR setting_value LIKE '%มุกดาหาร%'");
+            $results['logs'][] = "🏫 ปรับปรุงชื่อโรงเรียนในตาราง settings เป็น 'โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์' เรียบร้อย";
         } catch (\Throwable $e) {
             // ignore if settings table not ready
         }
@@ -898,7 +898,7 @@ if ($isJson) {
     </table>
 
     <div class="footer-note">
-        PCSHSKSN e-Portfolio System • พัฒนาสำหรับโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร
+        PCSHSKSN e-Portfolio System • พัฒนาสำหรับโรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์
     </div>
 </div>
 

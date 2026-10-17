@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ระบบ e-Portfolio โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร">
+    <meta name="description" content="ระบบ e-Portfolio โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์">
     <title>
         <?= e($pageTitle ?? 'e-Portfolio') ?> — PCSHSKSN
     </title>
@@ -795,7 +795,7 @@
                         style="width: 42px; height: 42px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); object-fit: contain;">
                     <div class="sidebar-logo-text">
                         PCSHSKSN e-Portfolio
-                        <small>จุฬาภรณ์ฯ มุกดาหาร</small>
+                        <small>จุฬาภรณ์ฯ กาฬสินธุ์</small>
                     </div>
                 </div>
                 <button type="button" class="btn-sidebar-close" onclick="toggleSidebar()" aria-label="ปิดเมนู"
@@ -1211,7 +1211,7 @@
                 style="padding: 40px 24px; text-align: center; color: var(--gray-500); font-size: 0.85rem; border-top: 1px solid var(--gray-100); background: #fafafa;">
                 <p style="margin-bottom: 6px;">พัฒนาโดย งานศูนย์ข้อมูลสารสนเทศ | กลุ่มบริหารงานวิชาการ</p>
                 <p style="margin-bottom: 12px; color: var(--primary-500); font-weight: 700;">
-                    โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร</p>
+                    โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์</p>
                 <p style="font-weight: 600;">© 2026 PCSHSKSN</p>
             </footer>
         </main>

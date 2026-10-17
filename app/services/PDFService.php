@@ -85,7 +85,7 @@ class PDFService
         $mpdf = new \Mpdf\Mpdf($config);
 
         $mpdf->SetTitle($opts['title'] ?? 'PCSHSKSN Document');
-        $mpdf->SetAuthor('โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร');
+        $mpdf->SetAuthor('โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์');
         $mpdf->SetCreator('PCSHSKSN e-Portfolio System');
 
         // Header/Footer มาตรฐานราชการ
@@ -124,8 +124,8 @@ class PDFService
             <tr>
                 <td width="60" style="vertical-align: middle;">' . $logoTag . '</td>
                 <td style="vertical-align: middle;">
-                    <div style="font-size: 13pt; font-weight: bold; color: #0f172a;">โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย มุกดาหาร</div>
-                    <div style="font-size: 9pt; color: #475569;">Princess Chulabhorn Science High School Mukdahan</div>
+                    <div style="font-size: 13pt; font-weight: bold; color: #0f172a;">โรงเรียนวิทยาศาสตร์จุฬาภรณราชวิทยาลัย กาฬสินธุ์</div>
+                    <div style="font-size: 9pt; color: #475569;">Princess Chulabhorn Science High School Kalasin</div>
                 </td>
                 <td width="180" style="text-align: right; vertical-align: middle; font-size: 9pt; color: #475569;">
                     เอกสาร: ' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '<br>
