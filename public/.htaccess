@@ -1,0 +1,12 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # กำหนด Base Path สำหรับ XAMPP
+    # หากเข้าผ่าน http://localhost/app/public/ ให้เปิดบรรทัดล่างนี้
+    # RewriteBase /app/public/
+
+    # ป้องกันการเข้าถึงไฟล์ตรงๆ แต่ถ้ามีไฟล์อยู่จริงให้รัน
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?url=$1 [L,QSA]
+</IfModule>

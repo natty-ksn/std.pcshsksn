@@ -1,0 +1,37 @@
+# ============================================================
+# uploads/.htaccess — ป้องกัน WebShell
+# ไฟล์ที่ผู้ใช้อัปโหลดต้องถูกเสิร์ฟเป็น "ข้อมูล" เท่านั้น ห้ามรันเป็นสคริปต์
+# ============================================================
+
+Options -Indexes -ExecCGI
+
+# ปิด PHP engine (กรณีรันเป็น Apache module)
+<IfModule mod_php.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+    php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+    php_flag engine off
+</IfModule>
+
+# ถอด handler ของสคริปต์ทุกชนิด (ครอบคลุม PHP-FPM / CGI)
+RemoveHandler .php .php3 .php4 .php5 .php7 .php8 .phtml .pht .phar .cgi .pl .py .sh
+RemoveType .php .php3 .php4 .php5 .php7 .php8 .phtml .pht .phar
+
+# ปฏิเสธไฟล์สคริปต์และไฟล์ซ่อนโดยเด็ดขาด
+<FilesMatch "(?i)(^\.|\.(php\d?|phtml|pht|phar|phps|cgi|pl|py|sh|bash|exe|bat|asp|aspx|jsp|htaccess)$)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Allow,Deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# ป้องกันเบราว์เซอร์เดาประเภทไฟล์ (เช่น ตีความรูปเป็น HTML/JS)
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+</IfModule>

@@ -1,0 +1,61 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # === Auto-detect Mode ===
+    # ปิด RewriteBase เพื่อให้ระบบตรวจจับพิกัดปัจจุบันโดยอัตโนมัติ
+    # RewriteBase /
+
+    # === Force HTTPS (Production) ===
+    # แก้ไขเป็น std.pcshsksn.ac.th
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # === Security: ปิดกั้นโฟลเดอร์ภายในก่อนเสมอ ===
+    # (ต้องอยู่ก่อนกฎ "ไฟล์มีอยู่จริง" ด้านล่าง มิฉะนั้นไฟล์จริงในโฟลเดอร์เหล่านี้จะถูกเสิร์ฟได้)
+    RewriteRule ^(core|app|config|database|logs|tmp|scripts|tests|storage|vendor|views|routes)(/|$) - [F,L]
+    # ห้ามเรียกไฟล์ซ่อน (.env, .env.production, .git ฯลฯ) — ยกเว้น .well-known สำหรับ SSL
+    RewriteRule (^|/)\.(?!well-known/) - [F,L]
+    # ห้ามเรียกไฟล์ PHP ใดๆ ใน uploads/
+    RewriteRule ^uploads/.*\.(php\d?|phtml|phar|pht|phps)$ - [F,L,NC]
+
+    # หากเรียกหาไฟล์ที่มีอยู่จริง หรือเรียกเข้าโฟลเดอร์ public/ หรือ install/ อยู่แล้ว — ไม่ต้อง Rewrite
+    RewriteCond %{REQUEST_FILENAME} -f [OR]
+    RewriteCond %{REQUEST_URI} /(public|install)($|/)
+    RewriteRule ^ - [L]
+    
+    # ส่งทุกอย่างไปที่ public/index.php
+    RewriteRule ^(.*)$ public/index.php?url=$1 [L,QSA]
+</IfModule>
+
+# ป้องกันไฟล์สำคัญ (config, logs, เอกสาร, แพ็กเกจ, สคริปต์ build)
+<FilesMatch "(^\.|\.(env|log|sql|md|gitignore|installed|lock|phar|zip|tar|gz|ps1|sh|bat|bak|swp|dist|xml|yml|yaml|ini)$|^composer\.json$|^phpunit\.xml$)">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order Allow,Deny
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# ปิดการแสดงรายการไฟล์ในโฟลเดอร์
+Options -Indexes
+
+# Cache สำหรับ Static Assets (เพิ่มความเร็ว)
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access 1 month"
+    ExpiresByType image/jpeg "access 1 month"
+    ExpiresByType image/png "access 1 month"
+    ExpiresByType image/gif "access 1 month"
+    ExpiresByType image/svg+xml "access 1 month"
+    ExpiresByType text/css "access 1 week"
+    ExpiresByType application/javascript "access 1 week"
+    ExpiresByType application/x-javascript "access 1 week"
+    ExpiresByType font/woff2 "access 1 month"
+</IfModule>
+
+# Gzip Compression (เพิ่มความเร็ว)
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json
+</IfModule>

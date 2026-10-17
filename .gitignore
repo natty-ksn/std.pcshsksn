@@ -1,0 +1,36 @@
+# Environment / Secrets (ห้ามขึ้น GitHub เด็ดขาด)
+.env
+.env.*
+!.env.example
+
+# Uploads
+uploads/*
+!uploads/.gitkeep
+!uploads/.htaccess
+
+# Logs / Temp
+logs/*
+!logs/.gitkeep
+tmp/*
+!tmp/.gitkeep
+.installed
+
+# IDE / AI tools
+.vscode/
+.idea/
+.claude/
+.qwen/
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Dependencies (Plesk จะรัน composer install เอง)
+vendor/
+node_modules/
+composer.phar
+
+# Build artifacts
+deploy_package.zip
+*.zip
+.phpunit.result.cache
