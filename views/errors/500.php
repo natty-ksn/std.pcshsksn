@@ -90,12 +90,15 @@
             <a href="<?= function_exists('url') ? url('/') : '/app/' ?>" class="btn btn-primary">← กลับหน้าหลัก</a>
             <a href="javascript:location.reload()" class="btn btn-secondary">🔄 ลองอีกครั้ง</a>
         </div>
-        <?php if (isset($exception) && $exception && (class_exists('App') && App::isDebug())): ?>
-        <div class="debug-info">
-            <strong style="color:#fbbf24;">🔧 Debug:</strong><br>
-            <code><?= e($exception->getMessage()) ?></code><br>
-            <small><?= e($exception->getFile()) ?>:<?= $exception->getLine() ?></small>
-        </div>
+        <?php if (!empty($exception)): ?>
+        <details style="margin-top: 25px; text-align: left; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; font-size: 0.85em; border: 1px solid rgba(255,255,255,0.2);">
+            <summary style="cursor: pointer; color: #fbbf24; font-weight: 600;">🔍 ดูรายละเอียดข้อผิดพลาด (Technical Error Details)</summary>
+            <div style="margin-top: 10px; font-family: monospace; word-break: break-all; color: #a5f3fc;">
+                <p style="margin-bottom: 6px;"><strong style="color: #f87171;">ข้อความ:</strong> <?= htmlspecialchars($exception->getMessage(), ENT_QUOTES, 'UTF-8') ?></p>
+                <p style="margin-bottom: 6px;"><strong style="color: #fcd34d;">ตำแหน่ง:</strong> <?= htmlspecialchars($exception->getFile(), ENT_QUOTES, 'UTF-8') ?>:<?= $exception->getLine() ?></p>
+                <p style="margin-bottom: 0;"><strong style="color: #cbd5e1;">ประเภท:</strong> <?= htmlspecialchars(get_class($exception), ENT_QUOTES, 'UTF-8') ?></p>
+            </div>
+        </details>
         <?php endif; ?>
     </div>
 </body>

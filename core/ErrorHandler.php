@@ -66,7 +66,7 @@ class ErrorHandler
         $data = [
             'code' => $code,
             'message' => self::getErrorMessage($code, $exception),
-            'exception' => App::isDebug() ? $exception : null,
+            'exception' => $exception,
         ];
 
         self::renderErrorPage($data);
@@ -303,13 +303,13 @@ class ErrorHandler
             $exception->getTraceAsString()
         );
 
-        $logFile = LOG_PATH . '/error.log';
-        $logDir = dirname($logFile);
+        $logDir = defined('LOG_PATH') ? LOG_PATH : (defined('ROOT_PATH') ? ROOT_PATH . '/logs' : dirname(__DIR__) . '/logs');
+        $logFile = $logDir . '/error.log';
 
         if (!is_dir($logDir)) {
-            mkdir($logDir, 0755, true);
+            @mkdir($logDir, 0775, true);
         }
 
-        file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
+        @file_put_contents($logFile, $logEntry, FILE_APPEND | LOCK_EX);
     }
 }

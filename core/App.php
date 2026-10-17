@@ -96,11 +96,12 @@ class App
     {
         $timestamp = date('Y-m-d H:i:s');
         $logLine = "[{$timestamp}] [{$level}] {$message}" . PHP_EOL;
-        $logFile = LOG_PATH . '/app.log';
+        $logDir = defined('LOG_PATH') ? LOG_PATH : (defined('ROOT_PATH') ? ROOT_PATH . '/logs' : dirname(__DIR__) . '/logs');
+        $logFile = $logDir . '/app.log';
 
-        if (!is_dir(LOG_PATH)) {
-            mkdir(LOG_PATH, 0755, true);
+        if (!is_dir($logDir)) {
+            @mkdir($logDir, 0775, true);
         }
-        file_put_contents($logFile, $logLine, FILE_APPEND | LOCK_EX);
+        @file_put_contents($logFile, $logLine, FILE_APPEND | LOCK_EX);
     }
 }
