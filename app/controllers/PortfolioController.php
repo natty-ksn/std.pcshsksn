@@ -223,7 +223,11 @@ class PortfolioController extends Controller
         }
 
         // Check for badges
-        $this->checkBadges($profile['id']);
+        try {
+            $this->checkBadges($profile['id']);
+        } catch (\Throwable $e) {
+            App::log("Legacy checkBadges error: " . $e->getMessage(), 'WARNING');
+        }
 
         // Phase 5: Dynamic Gamification — event-driven badge check
         try {
@@ -543,40 +547,52 @@ class PortfolioController extends Controller
     }
 
     /**
-     * ตรวจสอบและให้ Badge
+     * ตรวจสอบและให้ Badge (Legacy Safe Check)
      */
     private function checkBadges(int $studentId): void
     {
-        $userId = Auth::id();
-        $count = Database::fetch(
-            "SELECT COUNT(*) as count FROM portfolio_items WHERE student_id = ? AND status = 'published'",
-            [$studentId]
-        )['count'] ?? 0;
+        try {
+            $userId = Auth::id();
+            $count = Database::fetch(
+                "SELECT COUNT(*) as count FROM portfolio_items WHERE student_id = ? AND status = 'published'",
+                [$studentId]
+            )['count'] ?? 0;
 
-        $badgeChecks = [
-            ['code' => 'first_upload', 'threshold' => 1],
-            ['code' => 'five_works', 'threshold' => 5],
-            ['code' => 'ten_works', 'threshold' => 10],
-            ['code' => 'twenty_works', 'threshold' => 20],
-        ];
+            // ตรวจสอบกับรหัส Badge ที่มีจริงใน badges_master
+            $badgeChecks = [
+                ['code' => 'first_portfolio', 'threshold' => 1],
+                ['code' => 'rising_star', 'threshold' => 5],
+            ];
 
-        foreach ($badgeChecks as $badge) {
-            if ($count >= $badge['threshold']) {
-                // Check if this is a new badge (not already earned)
-                $existing = Database::fetch(
-                    "SELECT id FROM user_badges WHERE user_id = ? AND badge_code = ?",
-                    [$userId, $badge['code']]
-                );
+            foreach ($badgeChecks as $badge) {
+                if ($count >= $badge['threshold']) {
+                    // ตรวจสอบก่อนว่ามี code นี้ใน badges_master จริง ป้องกัน Foreign Key Constraint Fail
+                    $masterExists = Database::fetch(
+                        "SELECT code FROM badges_master WHERE code = ?",
+                        [$badge['code']]
+                    );
+                    if (!$masterExists) {
+                        continue;
+                    }
 
-                if (!$existing) {
-                    Database::query(
-                        "INSERT INTO user_badges (user_id, badge_code) VALUES (?, ?)",
+                    // Check if this is a new badge (not already earned)
+                    $existing = Database::fetch(
+                        "SELECT id FROM user_badges WHERE user_id = ? AND badge_code = ?",
                         [$userId, $badge['code']]
                     );
-                    // Send notification via Notifier
-                    Notifier::badgeAwarded($userId, $badge['code']);
+
+                    if (!$existing) {
+                        Database::query(
+                            "INSERT INTO user_badges (user_id, badge_code) VALUES (?, ?)",
+                            [$userId, $badge['code']]
+                        );
+                        // Send notification via Notifier
+                        Notifier::badgeAwarded($userId, $badge['code']);
+                    }
                 }
             }
+        } catch (\Throwable $e) {
+            App::log("checkBadges failed safely: " . $e->getMessage(), 'WARNING');
         }
     }
     /**

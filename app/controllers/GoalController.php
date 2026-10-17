@@ -213,7 +213,14 @@ class GoalController extends Controller
             ]
         );
 
-        Database::query("INSERT IGNORE INTO user_badges (user_id, badge_code) VALUES (?, 'goal_setter')", [Auth::id()]);
+        try {
+            $hasBadge = Database::fetch("SELECT 1 FROM badges_master WHERE code = 'goal_setter'");
+            if ($hasBadge) {
+                Database::query("INSERT IGNORE INTO user_badges (user_id, badge_code) VALUES (?, 'goal_setter')", [Auth::id()]);
+            }
+        } catch (\Throwable $e) {
+            App::log("Award goal_setter badge skipped: " . $e->getMessage(), 'WARNING');
+        }
         Auth::logAction('create_goal', 'student_goal', 0);
 
         // Phase 5: Badge event trigger — goal_set
@@ -253,7 +260,14 @@ class GoalController extends Controller
         );
 
         if ($newStatus === 'achieved') {
-            Database::query("INSERT IGNORE INTO user_badges (user_id, badge_code) VALUES (?, 'goal_achiever')", [Auth::id()]);
+            try {
+                $hasBadge = Database::fetch("SELECT 1 FROM badges_master WHERE code = 'goal_achiever'");
+                if ($hasBadge) {
+                    Database::query("INSERT IGNORE INTO user_badges (user_id, badge_code) VALUES (?, 'goal_achiever')", [Auth::id()]);
+                }
+            } catch (\Throwable $e) {
+                App::log("Award goal_achiever badge skipped: " . $e->getMessage(), 'WARNING');
+            }
             EXPService::award(Auth::id(), 'goal_achieved');
             Session::flash('success', '🎉 ยินดีด้วย! คุณบรรลุเป้าหมายแล้ว!');
         } else {
