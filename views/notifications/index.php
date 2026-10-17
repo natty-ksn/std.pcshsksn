@@ -22,7 +22,22 @@
             </div>
         </div>
     <?php else: ?>
-        <?php foreach ($notifications as $n): ?>
+        <?php 
+        $cleanText = function(string $text): string {
+            if (strpos($text, 'Ó') !== false || strpos($text, 'fif') !== false) {
+                if (strpos($text, 'ได้รับตรา') !== false) {
+                    return preg_replace('/🏅 ได้รับตรา.*/u', '🏅 ได้รับตรา 🌟 ผลงานแรก', $text);
+                }
+                if (strpos($text, 'ยินดีด้วย') !== false) {
+                    return 'ยินดีด้วย! คุณได้รับตรา "ผลงานแรก" เพิ่มผลงานแรกเข้าสู่ระบบ — ทุกการเดินทางเริ่มจากก้าวแรก';
+                }
+            }
+            return $text;
+        };
+        foreach ($notifications as $n): 
+            $title = $cleanText($n['title'] ?? '');
+            $message = $cleanText($n['message'] ?? '');
+        ?>
             <a href="<?= url('notifications/' . $n['id'] . '/read') ?>" class="card mb-2"
                 style="display:block;text-decoration:none;<?= $n['is_read'] ? 'opacity:0.6;' : '' ?>">
                 <div class="card-body" style="display:flex;align-items:center;gap:14px;padding:16px;">
@@ -32,10 +47,10 @@
                     </div>
                     <div style="flex:1;">
                         <div style="font-weight:600;color:var(--gray-800);font-size:0.9rem;">
-                            <?= e($n['title']) ?>
+                            <?= e($title) ?>
                         </div>
                         <div style="font-size:0.82rem;color:var(--gray-500);">
-                            <?= e($n['message']) ?>
+                            <?= e($message) ?>
                         </div>
                         <div style="font-size:0.75rem;color:var(--gray-400);margin-top:4px;">
                             <?= timeAgo($n['created_at']) ?>

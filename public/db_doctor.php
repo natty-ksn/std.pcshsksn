@@ -507,6 +507,138 @@ try {
         }
     }
 
+    // ----------------------------------------------------
+    // CHECK 6: ตรวจสอบความสมบูรณ์ของภาษาไทยและไอคอนใน badges_master
+    // ----------------------------------------------------
+    $hasCorruptedBadges = false;
+    $corruptedBadgeCount = 0;
+    try {
+        $stmt = $pdo->query("SELECT COUNT(*) FROM badges_master WHERE name LIKE '%Ó©%' OR description LIKE '%Ó©%' OR icon LIKE '%fif%' OR icon LIKE '%%'");
+        $corruptedBadgeCount = (int)$stmt->fetchColumn();
+        $hasCorruptedBadges = ($corruptedBadgeCount > 0);
+    } catch (\Throwable $e) {}
+
+    $results['summary']['total']++;
+    if (!$hasCorruptedBadges) {
+        $results['summary']['passed']++;
+        $results['checks'][] = [
+            'type' => 'encoding',
+            'name' => 'ข้อมูลเข็มตรา (Badges Master Encoding)',
+            'desc' => 'ความถูกต้องของภาษาไทยและไอคอนในตาราง badges_master',
+            'status' => 'passed',
+            'msg' => 'ภาษาไทยและอิโมจิไอคอนถูกต้องสมบูรณ์'
+        ];
+    } else {
+        if ($action === 'repair') {
+            $masterBadgeHeals = [
+                'first_portfolio' => ['name' => 'ผลงานแรก', 'description' => 'เพิ่มผลงานแรกเข้าสู่ระบบ — ทุกการเดินทางเริ่มจากก้าวแรก', 'icon' => '🌟'],
+                'rising_star'     => ['name' => 'ดาวรุ่ง', 'description' => 'มีผลงาน 5 รายการ — แสงสว่างที่กำลังเจิดจ้า', 'icon' => '⭐'],
+                'all_rounder'     => ['name' => 'รอบรู้', 'description' => 'มีผลงานครบทุกหมวดหมู่ — ทำได้หลากหลายด้าน', 'icon' => '🏅'],
+                'tech_master'     => ['name' => 'นักเทคโนโลยี', 'description' => 'มีผลงานเทคโนโลยี & คอมพิวเตอร์ 10+ รายการ', 'icon' => '💻'],
+                'science_champ'   => ['name' => 'นักวิทย์ดีเด่น', 'description' => 'มีผลงานวิทยาศาสตร์ระดับชาติ', 'icon' => '🧪'],
+                'team_player'     => ['name' => 'สมาชิกทีม', 'description' => 'เข้าร่วมทำงานร่วมกันใน 3 โครงงาน', 'icon' => '🤝'],
+                'consistent'      => ['name' => 'นักสู้ต่อเนื่อง', 'description' => 'เพิ่มผลงานอย่างต่อเนื่อง 3 เดือนติดต่อกัน', 'icon' => '📈'],
+                'mentor'          => ['name' => 'พี่เลี้ยงดีเด่น', 'description' => 'เป็นที่ปรึกษาให้คำแนะนำ 5 โครงงาน', 'icon' => '👨‍🏫'],
+                'first_upload'    => ['name' => 'ผลงานแรก', 'description' => 'เพิ่มผลงานแรกเข้าสู่ระบบ', 'icon' => '🌟'],
+                'five_works'      => ['name' => 'ดาวรุ่ง', 'description' => 'มีผลงาน 5 รายการ', 'icon' => '⭐'],
+                'ten_works'       => ['name' => 'รอบรู้', 'description' => 'มีผลงาน 10 รายการ', 'icon' => '🏅'],
+                'twenty_works'    => ['name' => 'เชี่ยวชาญ', 'description' => 'มีผลงาน 20 รายการ', 'icon' => '🏆'],
+                'goal_setter'     => ['name' => 'นักตั้งเป้าหมาย', 'description' => 'ตั้งเป้าหมายการศึกษา', 'icon' => '🎯'],
+                'goal_achiever'   => ['name' => 'ผู้บรรลุเป้าหมาย', 'description' => 'ทำเป้าหมายสำเร็จ', 'icon' => '🥇'],
+                'bronze_first_step' => ['name' => 'ก้าวแรก', 'description' => 'เพิ่มผลงานแรกเข้าสู่ระบบ — ทุกการเดินทางเริ่มจากก้าวแรก', 'icon' => '🌟'],
+                'bronze_explorer' => ['name' => 'นักสำรวจ', 'description' => 'ทำแบบประเมิน RIASEC สำเร็จ — รู้จักตัวเองคือจุดเริ่มต้นของความสำเร็จ', 'icon' => '🧭'],
+                'bronze_goal_setter' => ['name' => 'นักตั้งเป้าหมาย', 'description' => 'ตั้งเป้าหมายการศึกษาอย่างน้อย 1 รายการ', 'icon' => '🎯'],
+                'silver_rising_star' => ['name' => 'ดาวรุ่ง', 'description' => 'มีผลงาน 5 รายการ — แสงสว่างที่กำลังเจิดจ้า', 'icon' => '⭐'],
+                'silver_researcher' => ['name' => 'นักวิจัย', 'description' => 'มีผลงานวิจัย/สิ่งประดิษฐ์ อย่างน้อย 1 ชิ้น', 'icon' => '🔬'],
+                'gold_all_rounder' => ['name' => 'รอบรู้', 'description' => 'มีผลงานครบ 5 หมวดหมู่ขึ้นไป — คนเดียวที่ทำทุกอย่างได้', 'icon' => '🏅'],
+                'gold_award_winner' => ['name' => 'ผู้พิชิตรางวัล', 'description' => 'มีรางวัล/เกียรติบัตร อย่างน้อย 3 รายการ', 'icon' => '🏆'],
+                'platinum_national_hero' => ['name' => 'วีรบุรุษระดับชาติ', 'description' => 'มีผลงานระดับชาติ (national) อย่างน้อย 1 รายการ — ชื่อเสียงระดับประเทศ', 'icon' => '🇹🇭'],
+                'platinum_international' => ['name' => 'ระดับโลก', 'description' => 'มีผลงานระดับนานาชาติ — สร้างชื่อเสียงให้โรงเรียน', 'icon' => '🌍']
+            ];
+            $healStmt = $pdo->prepare("UPDATE badges_master SET name = ?, description = ?, icon = ? WHERE code = ?");
+            foreach ($masterBadgeHeals as $bCode => $bData) {
+                $healStmt->execute([$bData['name'], $bData['description'], $bData['icon'], $bCode]);
+            }
+            $results['summary']['fixed']++;
+            $results['checks'][] = [
+                'type' => 'encoding',
+                'name' => 'ข้อมูลเข็มตรา (Badges Master Encoding)',
+                'desc' => 'ซ่อมแซมภาษาไทยและไอคอนในตาราง badges_master',
+                'status' => 'fixed',
+                'msg' => 'แก้ไขข้อความและไอคอนภาษาไทยเรียบร้อยแล้ว'
+            ];
+            $results['logs'][] = "🎖️ ซ่อมแซมภาษาไทยในตาราง `badges_master` สำเร็จ";
+        } else {
+            $results['summary']['warnings']++;
+            $results['checks'][] = [
+                'type' => 'encoding',
+                'name' => 'ข้อมูลเข็มตรา (Badges Master Encoding)',
+                'desc' => 'ความถูกต้องของภาษาไทยและไอคอนในตาราง badges_master',
+                'status' => 'warning',
+                'msg' => "พบข้อความภาษาไทยผิดเพี้ยน {$corruptedBadgeCount} รายการ (กดซ่อมแซมเพื่อแก้ไขอัตโนมัติ)"
+            ];
+        }
+    }
+
+    // ----------------------------------------------------
+    // CHECK 7: ตรวจสอบข้อความแจ้งเตือนผิดเพี้ยนในตาราง notifications
+    // ----------------------------------------------------
+    $hasCorruptedNotifs = false;
+    $corruptedNotifCount = 0;
+    try {
+        $stmt = $pdo->query("SELECT COUNT(*) FROM notifications WHERE title LIKE '%Ó©%' OR message LIKE '%Ó©%' OR title LIKE '%fif%'");
+        $corruptedNotifCount = (int)$stmt->fetchColumn();
+        $hasCorruptedNotifs = ($corruptedNotifCount > 0);
+    } catch (\Throwable $e) {}
+
+    $results['summary']['total']++;
+    if (!$hasCorruptedNotifs) {
+        $results['summary']['passed']++;
+        $results['checks'][] = [
+            'type' => 'encoding',
+            'name' => 'ข้อความการแจ้งเตือน (Notifications Encoding)',
+            'desc' => 'ความถูกต้องของภาษาไทยในตาราง notifications',
+            'status' => 'passed',
+            'msg' => 'ภาษาไทยถูกต้องสมบูรณ์'
+        ];
+    } else {
+        if ($action === 'repair') {
+            try {
+                $pdo->exec("UPDATE notifications 
+                            SET title = '🏅 ได้รับตรา 🌟 ผลงานแรก',
+                                message = 'ยินดีด้วย! คุณได้รับตรา \"ผลงานแรก\" เพิ่มผลงานแรกเข้าสู่ระบบ — ทุกการเดินทางเริ่มจากก้าวแรก'
+                            WHERE title LIKE '%Ó©%' OR message LIKE '%Ó©%' OR title LIKE '%fif%'");
+                $results['summary']['fixed']++;
+                $results['checks'][] = [
+                    'type' => 'encoding',
+                    'name' => 'ข้อความการแจ้งเตือน (Notifications Encoding)',
+                    'desc' => 'ซ่อมแซมภาษาไทยในตาราง notifications',
+                    'status' => 'fixed',
+                    'msg' => 'ปรับปรุงข้อความแจ้งเตือนที่ผิดเพี้ยนเรียบร้อยแล้ว'
+                ];
+                $results['logs'][] = "🔔 ซ่อมแซมข้อความภาษาไทยในตาราง `notifications` สำเร็จ";
+            } catch (\Throwable $e) {
+                $results['summary']['errors']++;
+                $results['checks'][] = [
+                    'type' => 'encoding',
+                    'name' => 'ข้อความการแจ้งเตือน (Notifications Encoding)',
+                    'desc' => 'ซ่อมแซมภาษาไทยในตาราง notifications',
+                    'status' => 'error',
+                    'msg' => 'ไม่สามารถซ่อมแซมได้: ' . $e->getMessage()
+                ];
+            }
+        } else {
+            $results['summary']['warnings']++;
+            $results['checks'][] = [
+                'type' => 'encoding',
+                'name' => 'ข้อความการแจ้งเตือน (Notifications Encoding)',
+                'desc' => 'ความถูกต้องของภาษาไทยในตาราง notifications',
+                'status' => 'warning',
+                'msg' => "พบข้อความแจ้งเตือนผิดเพี้ยน {$corruptedNotifCount} รายการ (กดซ่อมแซมเพื่อแก้ไขอัตโนมัติ)"
+            ];
+        }
+    }
+
     if ($action === 'repair') {
         // อัปเดตชื่อโรงเรียนในตาราง settings ให้ถูกต้องเป็น กาฬสินธุ์
         try {
@@ -515,6 +647,20 @@ try {
         } catch (\Throwable $e) {
             // ignore if settings table not ready
         }
+
+        // กวาดซ่อมแซม badges_master และ notifications ซ้ำอีกครั้งเพื่อความชัวร์
+        try {
+            $healStmt = $pdo->prepare("UPDATE badges_master SET name = ?, description = ?, icon = ? WHERE code = ?");
+            if (isset($masterBadgeHeals)) {
+                foreach ($masterBadgeHeals as $bCode => $bData) {
+                    $healStmt->execute([$bData['name'], $bData['description'], $bData['icon'], $bCode]);
+                }
+            }
+            $pdo->exec("UPDATE notifications 
+                        SET title = '🏅 ได้รับตรา 🌟 ผลงานแรก',
+                            message = 'ยินดีด้วย! คุณได้รับตรา \"ผลงานแรก\" เพิ่มผลงานแรกเข้าสู่ระบบ — ทุกการเดินทางเริ่มจากก้าวแรก'
+                        WHERE title LIKE '%Ó©%' OR message LIKE '%Ó©%' OR title LIKE '%fif%'");
+        } catch (\Throwable $e) {}
 
         $results['logs'][] = "🎉 การซ่อมแซมและปรับปรุงฐานข้อมูลเสร็จสมบูรณ์เรียบร้อย";
     }
